@@ -1,0 +1,1 @@
+combatCommander min: 0 max: 0.0431133 avg: 221.867
