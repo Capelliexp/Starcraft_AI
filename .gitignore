@@ -286,3 +286,12 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# Custom
+*.Starcraft.mpq
+*.BroodWar.mpq
+*.StarDat.mpq
+Starcraft/Starcraft.mpq
+Starcraft/BroodWar.mpq
+Starcraft/StarDat.mpq
+Starcraft/BACKUP/
