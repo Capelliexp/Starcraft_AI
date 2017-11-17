@@ -9,5 +9,11 @@
     <ClCompile Include="Source\Dll.cpp">
       <Filter>DLL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MyBot.cpp" />
+    <ClCompile Include="Brains.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\MyBot.h" />
+    <ClInclude Include="Brains.h" />
   </ItemGroup>
 </Project>

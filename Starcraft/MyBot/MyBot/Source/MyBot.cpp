@@ -1,4 +1,5 @@
 #include "MyBot.h" 
+#include "Brain.h" 
 using namespace BWAPI;
 
 bool analyzed;
