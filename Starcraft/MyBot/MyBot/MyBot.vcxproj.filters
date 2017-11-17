@@ -4,16 +4,23 @@
     <Filter Include="DLL">
       <UniqueIdentifier>{9addfba9-7359-4b6c-a366-b04c8541b035}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{0cde158b-613f-4bef-b38c-ae83db5b1c52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Dll.cpp">
       <Filter>DLL</Filter>
     </ClCompile>
     <ClCompile Include="Source\MyBot.cpp" />
-    <ClCompile Include="Brains.cpp" />
+    <ClCompile Include="Source\Brain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\MyBot.h" />
-    <ClInclude Include="Brains.h" />
+    <ClInclude Include="Source\Brain.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyBot.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

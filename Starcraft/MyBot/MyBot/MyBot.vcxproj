@@ -95,12 +95,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Brains.cpp" />
+    <ClCompile Include="Source\Brain.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\MyBot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Brains.h" />
+    <ClInclude Include="Source\Brain.h" />
     <ClInclude Include="Source\MyBot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
