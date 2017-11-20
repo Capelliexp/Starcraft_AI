@@ -41,4 +41,8 @@ public:
 	void showPlayers();
 	void showForces();
 	Position findGuardPoint();
+
+	//My stuff
+	short frameCount;
+
 };

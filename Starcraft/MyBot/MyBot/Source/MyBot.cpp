@@ -11,6 +11,8 @@ BWTA::Region* enemy_base;
 //when a new game has been started with the bot.
 void MyBot::onStart()
 {
+	frameCount = 0;
+
 	Broodwar->sendText("Hello world!");
 	//Enable flags
 	Broodwar->enableFlag(Flag::UserInput);
@@ -84,10 +86,14 @@ Position MyBot::findGuardPoint()
 //shall be called.
 void MyBot::onFrame()
 {
-	Broodwar->printf("It works 1");
+	++frameCount;
+
+	Broodwar->printf("It works 666");
 	//Call every 100:th frame
-	if (Broodwar->getFrameCount() % 100 == 0)
+	//if (Broodwar->getFrameCount() % 100 == 0)
+	if (frameCount == 100)
 	{
+		frameCount = 0;
 		//Order one of our workers to guard our chokepoint.
 		//Iterate through the list of units.
 		for (auto u : Broodwar->self()->getUnits())

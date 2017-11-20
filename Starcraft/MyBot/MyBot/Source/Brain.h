@@ -7,18 +7,16 @@ void DrawBox(int x, int y);
 void DrawTextOnObject(Unit object, std::string text, int offset);
 
 //BUILD
-int BuildBuildingCoord(Unit building, int x, int y);
-int BuildBuildingLocation(Unit building, Position position);
-int BuildUnit(Unit unit, Unit building);
-int BuildAddOn(Unit addOn, Unit building);
+int BuildBuildingLocation(UnitType building, Unit worker, TilePosition position);
+int TrainUnit(Unit building, UnitType unit);
+int BuildAddOn(Unit building, UnitType addOn);
+int Research(Unit building, TechType tech);
 
-//MOVE
+//UNIT COMMANDS
 int MoveUnitDifference(Unit unit, int x, int y, Order moveType);
-int MoveUnitCoord(Unit unit, int x, int y, Order moveType);
-int MoveUnitLocation(Unit unit, Position position, Order moveType);
-
-//UNIT ABILITY COMMANDS
-int TankSiegeMode(Unit unit);
+int OrderUnitLocation(Unit unit, Position position, Order moveType);
+int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order moveType);
+int OrderUnitCommand(Unit unit, Order moveType);
 
 //MAINTENANCE
 int IdleWorkersWork();
