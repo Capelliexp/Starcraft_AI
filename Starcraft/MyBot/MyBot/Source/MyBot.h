@@ -13,6 +13,13 @@ DWORD WINAPI AnalyzeThread();
 using namespace BWAPI;
 using namespace BWTA;
 
+typedef struct {
+	short task, step;
+	UnitType construct;
+	short origAmount;
+	short currAmount;
+} subTask;
+
 class MyBot : public BWAPI::AIModule
 {
 public:
@@ -43,6 +50,10 @@ public:
 	Position findGuardPoint();
 
 	//My stuff
-	short frameCount;
+	short frameCount100;
+	subTask* task;
+	subTask currentSubTask;
+	int currentSubTaskNr;
+	Position* basePosition;
 
 };

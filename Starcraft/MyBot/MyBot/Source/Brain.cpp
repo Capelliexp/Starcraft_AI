@@ -96,8 +96,8 @@ int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
 	case Orders::Enum::Unsieging:
 		if (!unit->unsiege()) return 0;
 		break;
-	case Orders::Enum::LiftingOff:	//no counter????
-		if (!unit->lift()) return 0;	//counter = land(pos)
+	case Orders::Enum::LiftingOff:	//no counterpart?!?
+		if (!unit->lift()) return 0;	//counterpart = land(pos)
 		break;
 	default:
 		return -1;
@@ -107,4 +107,11 @@ int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
 }
 
 //OTHER
-int IdleWorkersWork() {}
+int IdleWorkersWork(MyBot bot) {
+	for (auto unit : Broodwar->self()->getUnits()) {
+		if (unit->getType().isWorker() && unit->isIdle()) {
+			OrderUnitLocation(unit, FindClosestMineralPos(bot.basePosition[0]));
+		}
+	}
+		
+}

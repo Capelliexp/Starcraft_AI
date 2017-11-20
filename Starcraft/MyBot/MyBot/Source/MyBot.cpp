@@ -11,9 +11,29 @@ BWTA::Region* enemy_base;
 //when a new game has been started with the bot.
 void MyBot::onStart()
 {
-	frameCount = 0;
+	frameCount100 = 0;
+	task = new subTask[12];
+	task[0] =  { 1, 1, UnitTypes::Enum::Terran_Supply_Depot, 2, 2 };
+	task[1] =  { 1, 2, UnitTypes::Enum::Terran_Barracks, 1, 1 };
+	task[2] =  { 1, 3, UnitTypes::Enum::Terran_Marine, 10, 10 };
+	task[3] =  { 2, 1, UnitTypes::Enum::Terran_Academy, 1, 1 };
+	task[4] =  { 2, 2, UnitTypes::Enum::Terran_Refinery, 1, 1 };
+	task[5] =  { 2, 3, UnitTypes::Enum::Terran_Medic, 3, 3 };
+	task[6] =  { 2, 4, UnitTypes::Enum::Terran_SCV, 5, 5 };
+	task[7] =  { 3, 1, UnitTypes::Enum::Terran_Factory, 1, 1 };
+	task[8] =  { 3, 2, UnitTypes::Enum::Terran_Machine_Shop, 1, 1 };
+	task[9] =  { 3, 3, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 3 };
+	task[10] = { 4, 1, UnitTypes::Enum::Terran_Command_Center, 1, 1 };
+	task[11] = { 4, 2, UnitTypes::Enum::Terran_SCV, 4, 4 };
+	currentSubTask = task[0];
+	currentSubTaskNr = 0;
 
-	Broodwar->sendText("Hello world!");
+	basePosition = new Position[1];
+	for (auto unit : Broodwar->self()->getUnits())
+		if (unit->getType() == UnitTypes::Enum::Terran_Command_Center)
+			basePosition[0] = unit->getPosition();
+
+	Broodwar->sendText("Bot start");
 	//Enable flags
 	Broodwar->enableFlag(Flag::UserInput);
 	//Uncomment to enable complete map information
@@ -52,10 +72,8 @@ void MyBot::onStart()
 //No need to change this.
 void MyBot::onEnd(bool isWinner)
 {
-	if (isWinner)
-	{
-		Broodwar->sendText("I won!");
-	}
+	if (isWinner) Broodwar->sendText("WINNER!");
+	else Broodwar->sendText("loser");
 }
 
 //Finds a guard point around the home base.
@@ -86,36 +104,59 @@ Position MyBot::findGuardPoint()
 //shall be called.
 void MyBot::onFrame()
 {
-	++frameCount;
+	++frameCount100;
 
-	Broodwar->printf("It works 666");
-	//Call every 100:th frame
-	//if (Broodwar->getFrameCount() % 100 == 0)
-	if (frameCount == 100)
-	{
-		frameCount = 0;
+	if (analyzed)	//Draw lines around regions, chokepoints etc.
+		drawTerrainData();
+
+	if (frameCount100 == 100) {
+		frameCount100 = 0;
+
+		if (currentSubTask.currAmount > 0) {
+			if (currentSubTask.construct == UnitTypes::Buildings) {
+				for (auto unit : Broodwar->self()->getUnits())
+					if (unit->getType().isWorker())
+						if (BuildBuildingLocation(currentSubTask.construct, unit, FindSuitableBuildingTile(basePosition[0]))) {
+							currentSubTask.currAmount--;
+							break;
+						}	
+			}
+			else if (currentSubTask.construct == UnitTypes::AllUnits) {
+				for (auto unit : Broodwar->self()->getUnits())
+					if (unit->getType() == currentSubTask.construct.whatBuilds().first)
+						if (TrainUnit(unit, currentSubTask.construct)) {
+							currentSubTask.currAmount--;
+							break;
+						}
+			}
+		}
+		else if (CountUnitType(currentSubTask.task) == currentSubTask.origAmount) {
+			currentSubTask = task[currentSubTaskNr + 1];
+		}
+	}
+
+	IdleWorkersWork(*this);
+
+	/*
+	if (frameCount100 == 100){
+		frameCount100 = 0;
 		//Order one of our workers to guard our chokepoint.
 		//Iterate through the list of units.
-		for (auto u : Broodwar->self()->getUnits())
-		{
+		for (auto unit : Broodwar->self()->getUnits()){
 			//Check if unit is a worker.
-			if (u->getType().isWorker())
-			{
+			if (unit->getType().isWorker()){
 				//Find guard point
 				Position guardPoint = findGuardPoint();
 				//Order the worker to move to the guard point
-				u->rightClick(guardPoint);
+				unit->rightClick(guardPoint);
 				//Only send the first worker.
 				break;
 			}
 		}
 	}
-
-	//Draw lines around regions, chokepoints etc.
-	if (analyzed)
-	{
-		drawTerrainData();
-	}
+	*/
+	
+	
 }
 
 //Is called when text is written in the console window.
