@@ -1,6 +1,5 @@
 #pragma once
 #include <BWAPI.h>
-
 #include <BWTA.h>
 #include <windows.h>
 
@@ -51,6 +50,7 @@ public:
 
 	//My stuff
 	short frameCount100;
+	short frameCount1000;
 	subTask* task;
 	subTask currentSubTask;
 	int currentSubTaskNr;

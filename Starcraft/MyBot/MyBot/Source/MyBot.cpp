@@ -12,6 +12,7 @@ BWTA::Region* enemy_base;
 void MyBot::onStart()
 {
 	frameCount100 = 0;
+	frameCount1000 = 0;
 	task = new subTask[12];
 	task[0] =  { 1, 1, UnitTypes::Enum::Terran_Supply_Depot, 2, 2 };
 	task[1] =  { 1, 2, UnitTypes::Enum::Terran_Barracks, 1, 1 };
@@ -27,6 +28,8 @@ void MyBot::onStart()
 	task[11] = { 4, 2, UnitTypes::Enum::Terran_SCV, 4, 4 };
 	currentSubTask = task[0];
 	currentSubTaskNr = 0;
+
+	bot = this;
 
 	basePosition = new Position[1];
 	for (auto unit : Broodwar->self()->getUnits())
@@ -102,16 +105,14 @@ Position MyBot::findGuardPoint()
 
 //This is the method called each frame. This is where the bot's logic
 //shall be called.
-void MyBot::onFrame()
-{
+void MyBot::onFrame(){
 	++frameCount100;
+	++frameCount1000;
 
 	if (analyzed)	//Draw lines around regions, chokepoints etc.
 		drawTerrainData();
 
 	if (frameCount100 == 100) {
-		frameCount100 = 0;
-
 		if (currentSubTask.currAmount > 0) {
 			if (currentSubTask.construct == UnitTypes::Buildings) {
 				for (auto unit : Broodwar->self()->getUnits())
@@ -135,10 +136,18 @@ void MyBot::onFrame()
 		}
 	}
 
-	IdleWorkersWork(*this);
+	IdleWorkersWork();
+	
+	if (frameCount100 == 100) {
+		for (auto unit : Broodwar->self()->getUnits()) {
+			if (unit->getType() == UnitTypes::Enum::Terran_Command_Center) {
+				DrawBox(unit->getPosition());
+				break;
+			}
+		}
+	}
 
-	/*
-	if (frameCount100 == 100){
+	/*if (frameCount100 == 100){
 		frameCount100 = 0;
 		//Order one of our workers to guard our chokepoint.
 		//Iterate through the list of units.
@@ -153,10 +162,11 @@ void MyBot::onFrame()
 				break;
 			}
 		}
-	}
-	*/
+	}*/
 	
 	
+	if (frameCount100 == 100) frameCount100 = 0;
+	if (frameCount1000 == 1000) frameCount1000 = 0;
 }
 
 //Is called when text is written in the console window.

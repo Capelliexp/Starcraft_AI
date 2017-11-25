@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MyBot.h"
+MyBot* bot;
 
 //HELPER
 void DrawBox(Position position);
@@ -19,6 +20,9 @@ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order moveType);
 int OrderUnitCommand(Unit unit, Order moveType);
 
 //TERRAIN
+int RepeatSearch(Position coord, bool vert, int i);
+bool GoodSpot(Position pos);
+
 TilePosition FindSuitableBuildingTile(Position origin);
 TilePosition FindClosestMineralTile(Position origin);
 TilePosition FindClosestGasTile(Position origin);
@@ -28,7 +32,7 @@ Position FindClosestMineralPos(Position origin);
 Position FindClosestGasPos(Position origin);
 
 //MACRO
-int IdleWorkersWork(MyBot bot);
+int IdleWorkersWork();
 int BaseBuilder();
 int ArmyCreator();
 int Scout();
