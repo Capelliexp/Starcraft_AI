@@ -1,5 +1,6 @@
-#include "MyBot.h" 
-#include "Brain.h" 
+//#include "MyBot.h"
+#include "Brain.h"
+
 using namespace BWAPI;
 
 bool analyzed;
@@ -14,22 +15,20 @@ void MyBot::onStart()
 	frameCount100 = 0;
 	frameCount1000 = 0;
 	task = new subTask[12];
-	task[0] =  { 1, 1, UnitTypes::Enum::Terran_Supply_Depot, 2, 2 };
-	task[1] =  { 1, 2, UnitTypes::Enum::Terran_Barracks, 1, 1 };
-	task[2] =  { 1, 3, UnitTypes::Enum::Terran_Marine, 10, 10 };
-	task[3] =  { 2, 1, UnitTypes::Enum::Terran_Academy, 1, 1 };
-	task[4] =  { 2, 2, UnitTypes::Enum::Terran_Refinery, 1, 1 };
-	task[5] =  { 2, 3, UnitTypes::Enum::Terran_Medic, 3, 3 };
-	task[6] =  { 2, 4, UnitTypes::Enum::Terran_SCV, 5, 5 };
-	task[7] =  { 3, 1, UnitTypes::Enum::Terran_Factory, 1, 1 };
-	task[8] =  { 3, 2, UnitTypes::Enum::Terran_Machine_Shop, 1, 1 };
-	task[9] =  { 3, 3, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 3 };
-	task[10] = { 4, 1, UnitTypes::Enum::Terran_Command_Center, 1, 1 };
-	task[11] = { 4, 2, UnitTypes::Enum::Terran_SCV, 4, 4 };
+	task[0] =  { 1, 1, UnitTypes::Enum::Terran_Supply_Depot, 2, 0, 0 };
+	task[1] =  { 1, 2, UnitTypes::Enum::Terran_Barracks, 1, 0, 0 };
+	task[2] =  { 1, 3, UnitTypes::Enum::Terran_Marine, 10, 0, 0 };
+	task[3] =  { 2, 1, UnitTypes::Enum::Terran_Academy, 1, 0, 0 };
+	task[4] =  { 2, 2, UnitTypes::Enum::Terran_Refinery, 1, 0, 0 };
+	task[5] =  { 2, 3, UnitTypes::Enum::Terran_Medic, 3, 0, 0 };
+	task[6] =  { 2, 4, UnitTypes::Enum::Terran_SCV, 5, 0, 0 };
+	task[7] =  { 3, 1, UnitTypes::Enum::Terran_Factory, 1, 0, 0 };
+	task[8] =  { 3, 2, UnitTypes::Enum::Terran_Machine_Shop, 1, 0, 0 };
+	task[9] =  { 3, 3, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 0, 0 };
+	task[10] = { 4, 1, UnitTypes::Enum::Terran_Command_Center, 1, 0, 0 };
+	task[11] = { 4, 2, UnitTypes::Enum::Terran_SCV, 4, 0, 0 };
 	currentSubTask = task[0];
 	currentSubTaskNr = 0;
-
-	bot = this;
 
 	basePosition = new Position[1];
 	for (auto unit : Broodwar->self()->getUnits())
@@ -65,10 +64,71 @@ void MyBot::onStart()
 			if (closestMineral != NULL)
 			{
 				u->rightClick(closestMineral);
-				Broodwar->printf("Send worker %d to mineral %d", u->getID(), closestMineral->getID());
+				//Broodwar->printf("Send worker %d to mineral %d", u->getID(), closestMineral->getID());
 			}
 		}
 	}
+}
+
+//This is the method called each frame. This is where the bot's logic
+//shall be called.
+void MyBot::onFrame() {
+	frameCount100++;
+	frameCount1000++;
+
+	//Draw lines around regions, chokepoints etc.
+	if (analyzed) drawTerrainData();
+
+	//Draw box on all friendly units
+	for (auto unit : Broodwar->self()->getUnits()) DrawBox(unit->getPosition(), 5);
+
+	if (frameCount100 == 100) {
+		Broodwar->sendText("Unit create");
+		if (currentSubTask.completedUnits < currentSubTask.requiredUnits) {
+			if (currentSubTask.construct > 100 /* == UnitTypes::Buildings*/) {
+				if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(this, basePosition[0])))
+					currentSubTask.inProgressUnits++;
+				else
+					Broodwar->sendText("   Failed to build building");
+			}
+			else if (currentSubTask.construct < 100 /* == UnitTypes::AllUnits*/) {
+				if (TrainUnit(currentSubTask.construct))
+					currentSubTask.inProgressUnits++;
+				else 
+					Broodwar->sendText("   Failed to train unit");
+			}
+			else Broodwar->sendText("   Failed to interprete unit type");
+		}
+		else if (currentSubTask.inProgressUnits == 0 && CountUnitType(currentSubTask.task) == currentSubTask.requiredUnits) {
+			currentSubTask = task[currentSubTaskNr + 1];
+			Broodwar->sendText("   Getting new task");
+		}
+		else if (currentSubTask.inProgressUnits > 0) Broodwar->sendText("   Current production not done");
+		else Broodwar->sendText("   Failed to start new task");
+	}
+
+	IdleWorkersWork(this);
+
+	/*if (frameCount100 == 100){
+	frameCount100 = 0;
+	//Order one of our workers to guard our chokepoint.
+	//Iterate through the list of units.
+	for (auto unit : Broodwar->self()->getUnits()){
+	//Check if unit is a worker.
+	if (unit->getType().isWorker()){
+	//Find guard point
+	Position guardPoint = findGuardPoint();
+	//Order the worker to move to the guard point
+	unit->rightClick(guardPoint);
+	//Only send the first worker.
+	break;
+	}
+	}
+	}*/
+
+
+	if (frameCount100 == 100) frameCount100 = 0;
+	if (frameCount1000 == 1000) frameCount1000 = 0;
 }
 
 //Called when a game is ended.
@@ -101,72 +161,6 @@ Position MyBot::findGuardPoint()
 	}
 
 	return choke->getCenter();
-}
-
-//This is the method called each frame. This is where the bot's logic
-//shall be called.
-void MyBot::onFrame(){
-	++frameCount100;
-	++frameCount1000;
-
-	if (analyzed)	//Draw lines around regions, chokepoints etc.
-		drawTerrainData();
-
-	if (frameCount100 == 100) {
-		if (currentSubTask.currAmount > 0) {
-			if (currentSubTask.construct == UnitTypes::Buildings) {
-				for (auto unit : Broodwar->self()->getUnits())
-					if (unit->getType().isWorker())
-						if (BuildBuildingLocation(currentSubTask.construct, unit, FindSuitableBuildingTile(basePosition[0]))) {
-							currentSubTask.currAmount--;
-							break;
-						}	
-			}
-			else if (currentSubTask.construct == UnitTypes::AllUnits) {
-				for (auto unit : Broodwar->self()->getUnits())
-					if (unit->getType() == currentSubTask.construct.whatBuilds().first)
-						if (TrainUnit(unit, currentSubTask.construct)) {
-							currentSubTask.currAmount--;
-							break;
-						}
-			}
-		}
-		else if (CountUnitType(currentSubTask.task) == currentSubTask.origAmount) {
-			currentSubTask = task[currentSubTaskNr + 1];
-		}
-	}
-
-	IdleWorkersWork();
-	
-	if (frameCount100 == 100) {
-		for (auto unit : Broodwar->self()->getUnits()) {
-			if (unit->getType() == UnitTypes::Enum::Terran_Command_Center) {
-				DrawBox(unit->getPosition());
-				break;
-			}
-		}
-	}
-
-	/*if (frameCount100 == 100){
-		frameCount100 = 0;
-		//Order one of our workers to guard our chokepoint.
-		//Iterate through the list of units.
-		for (auto unit : Broodwar->self()->getUnits()){
-			//Check if unit is a worker.
-			if (unit->getType().isWorker()){
-				//Find guard point
-				Position guardPoint = findGuardPoint();
-				//Order the worker to move to the guard point
-				unit->rightClick(guardPoint);
-				//Only send the first worker.
-				break;
-			}
-		}
-	}*/
-	
-	
-	if (frameCount100 == 100) frameCount100 = 0;
-	if (frameCount1000 == 1000) frameCount1000 = 0;
 }
 
 //Is called when text is written in the console window.
@@ -407,5 +401,9 @@ void MyBot::showForces()
 //Called when a unit has been completed, i.e. finished built.
 void MyBot::onUnitComplete(BWAPI::Unit unit)
 {
-	//Broodwar->sendText("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x,unit->getPosition().y);
+	Broodwar->sendText("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x,unit->getPosition().y);
+	if (unit->getType() == currentSubTask.construct) {
+		currentSubTask.completedUnits++;
+		currentSubTask.inProgressUnits--;
+	}
 }

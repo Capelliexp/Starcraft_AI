@@ -7,14 +7,20 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{0cde158b-613f-4bef-b38c-ae83db5b1c52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{7807c571-563c-4de5-ae27-87e5ceee14ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Dll.cpp">
       <Filter>DLL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MyBot.cpp" />
-    <ClCompile Include="Source\Brain.cpp" />
-    <ClCompile Include="Source\Helper.cpp" />
+    <ClCompile Include="Source\Brain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MyBot.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Brain.h">

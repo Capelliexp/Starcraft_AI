@@ -1,15 +1,13 @@
 #pragma once
-
 #include "MyBot.h"
-MyBot* bot;
 
 //HELPER
-void DrawBox(Position position);
+void DrawBox(Position position, int size);
 void DrawTextOnObject(Unit object, std::string text, int offset);
 
 //BUILD
-int BuildBuildingLocation(UnitType building, Unit worker, TilePosition position);
-int TrainUnit(Unit building, UnitType unit);
+int BuildBuildingLocation(UnitType building, TilePosition position);
+int TrainUnit(UnitType unit);
 int BuildAddOn(Unit building, UnitType addOn);
 int Research(Unit building, TechType tech);
 
@@ -23,7 +21,7 @@ int OrderUnitCommand(Unit unit, Order moveType);
 int RepeatSearch(Position coord, bool vert, int i);
 bool GoodSpot(Position pos);
 
-TilePosition FindSuitableBuildingTile(Position origin);
+TilePosition FindSuitableBuildingTile(MyBot* bot, Position origin);
 TilePosition FindClosestMineralTile(Position origin);
 TilePosition FindClosestGasTile(Position origin);
 
@@ -32,7 +30,7 @@ Position FindClosestMineralPos(Position origin);
 Position FindClosestGasPos(Position origin);
 
 //MACRO
-int IdleWorkersWork();
+int IdleWorkersWork(MyBot* bot);
 int BaseBuilder();
 int ArmyCreator();
 int Scout();

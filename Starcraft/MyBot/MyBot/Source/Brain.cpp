@@ -1,16 +1,28 @@
 #include "Brain.h"
 
-//BUILDING COMMANDS
-int BuildBuildingLocation(UnitType building, Unit worker, TilePosition position) {
-	if (!worker->build(building, position)) return 0;
-
-	return 1;
+//HELPER
+void DrawBox(Position position, int size) {
+	int HBS = size / 2;
+	Broodwar->drawBoxMap({ position.x - HBS, position.y - HBS }, { position.x + HBS, position.y + HBS }, 111, true);
 }
 
-int TrainUnit(Unit building, UnitType unit) {
-	if (!building->train(unit)) return 0;
+void DrawTextOnObject(Unit object, std::string text, int offset) {}
 
-	return 1;
+//BUILDING COMMANDS
+int BuildBuildingLocation(UnitType building, TilePosition position) {
+	for (auto unit : Broodwar->self()->getUnits())
+		if (unit->getType().isWorker())
+			if (unit->build(building, position)) return 1;
+
+	return 0;
+}
+
+int TrainUnit(UnitType unitType) {
+	for (auto building : Broodwar->self()->getUnits())
+		if (building->getType() == unitType.whatBuilds().first)
+			if (building->train(unitType)) return 1;
+
+	return 0;
 }
 
 int BuildAddOn(Unit building, UnitType addOn) {
@@ -116,6 +128,7 @@ int RepeatSearch(Position coord, bool vert, int i) {
 			if (GoodSpot({coord.x, coord.y+c})) {}
 		}
 	}
+	return 1;
 }
 
 //canBuildHere (TilePosition position, UnitType type, Unit builder=nullptr, bool checkExplored=false)=0
@@ -125,9 +138,10 @@ bool GoodSpot(Position pos) {
 
 		}
 	}
+	return 1;
 }
 
-TilePosition FindSuitableBuildingTile(Position origin) {	//place building in center of free 6x6
+TilePosition FindSuitableBuildingTile(MyBot* bot, Position origin) {	//place building in center of free 6x6
 	//Position guardPoint = bot->findGuardPoint();
 	int tileSearchArea = 48;
 	for (int i = 1; i < tileSearchArea; i++) {		
@@ -136,40 +150,70 @@ TilePosition FindSuitableBuildingTile(Position origin) {	//place building in cen
 		RepeatSearch({ origin.x, origin.y + i }, true, i);	//up
 		RepeatSearch({ origin.x, origin.y - i }, true, i);	//down
 	}
+	return {1,1};
 }
 
-TilePosition FindClosestMineralTile(Position origin) {}
+TilePosition FindClosestMineralTile(Position origin) {
+	return { 1,1 };
+}
 
-TilePosition FindClosestGasTile(Position origin) {}
+TilePosition FindClosestGasTile(Position origin) {
+	return { 1,1 };
+}
 
-Position FindSuitableBuildingPos(Position origin) {}
+Position FindSuitableBuildingPos(Position origin) {
+	return { 1,1 };
+}
 
-Position FindClosestMineralPos(Position origin) {}
+Position FindClosestMineralPos(Position origin) {
+	return {1,1};
+}
 
 Position FindClosestGasPos(Position origin) {}
 
 //MACRO
-int IdleWorkersWork() {
+int IdleWorkersWork(MyBot* bot) {
 	for (auto unit : Broodwar->self()->getUnits()) {
 		if (unit->getType().isWorker() && unit->isIdle()) {
 			OrderUnitLocation(unit, FindClosestMineralPos(bot->basePosition[0]));
 		}
 	}
-
+	return 1;
 }
 
-int BaseBuilder() {}
+int BaseBuilder() {
+	return 1;
+}
 
-int ArmyCreator() {}
+int ArmyCreator() {
+	return 1;
+}
 
-int Scout() {}
+int Scout() {
+	return 1;
+}
 
 //MICRO
-int GroupUp() {}
+int GroupUp() {
+	return 1;
+}
 
-int CreateSquad() {}
+int CreateSquad() {
+	return 1;
+}
 
-int SquadOrder() {}
+int SquadOrder() {
+	return 1;
+}
 
 //GLOBAL
-int CountUnitType(UnitType building) {}
+int CountUnitType(UnitType searchUnit) {
+	int count = 0;
+	for (auto unit : Broodwar->self()->getUnits()) {
+		if (unit->getType() == searchUnit) {
+			count++;
+		}
+	}
+	return count;
+}
+

@@ -15,8 +15,7 @@ using namespace BWTA;
 typedef struct {
 	short task, step;
 	UnitType construct;
-	short origAmount;
-	short currAmount;
+	short requiredUnits, completedUnits, inProgressUnits;
 } subTask;
 
 class MyBot : public BWAPI::AIModule
