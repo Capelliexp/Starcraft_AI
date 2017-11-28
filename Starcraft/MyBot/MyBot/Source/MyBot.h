@@ -2,6 +2,9 @@
 #include <BWAPI.h>
 #include <BWTA.h>
 #include <windows.h>
+#include <utility>
+#include <cmath>
+#include <vector>
 
 extern bool analyzed;
 extern bool analysis_just_finished;
@@ -48,11 +51,13 @@ public:
 	Position findGuardPoint();
 
 	//My stuff
+	short frameCount10;
 	short frameCount100;
 	short frameCount1000;
 	subTask* task;
 	subTask currentSubTask;
 	int currentSubTaskNr;
-	Position* basePosition;
+	std::vector<TilePosition> baseTile;
+	std::vector<Position> basePosition;
 
 };

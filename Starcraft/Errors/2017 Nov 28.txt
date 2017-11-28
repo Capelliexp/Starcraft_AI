@@ -1,0 +1,155 @@
+
+//////////////////////////////////////////////////
+TIME: Tue Nov 28 16:14:02 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Insufficient_Minerals
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 767FCBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F94953D    FindClosestMineralTile
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0F9495F1    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:255
+  MyBot.dll         0x0F94AC03    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:141
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Tue Nov 28 16:23:11 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 767FCBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FA89547    FindClosestMineralPos
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:259
+  MyBot.dll         0x0FA895F1    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:282
+  MyBot.dll         0x0FA8ABE3    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:141
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Tue Nov 28 16:39:24 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Insufficient_Minerals
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 767FCBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FC3952E    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0FC395CA    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:240
+  MyBot.dll         0x0FC3AE7E    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:146
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Tue Nov 28 16:41:27 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FAA4
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F8
+  EBP: 0019FA54
+  EIP: 767FCBB2
+  ESP: 0019F9F8
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FCE952E    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0FCE95CA    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:241
+  MyBot.dll         0x0FCEAE7E    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:146
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

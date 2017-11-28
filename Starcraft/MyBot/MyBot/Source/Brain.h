@@ -4,12 +4,12 @@
 //HELPER
 void DrawBox(Position position, int size);
 void DrawTextOnObject(Unit object, std::string text, int offset);
-
+void DrawTextOnScreen(std::string text);
 //BUILD
 int BuildBuildingLocation(UnitType building, TilePosition position);
 int TrainUnit(UnitType unit);
 int BuildAddOn(Unit building, UnitType addOn);
-int Research(Unit building, TechType tech);
+int Research(TechType tech);
 
 //UNIT COMMANDS
 int MoveUnitDifference(Unit unit, int x, int y, Order moveType);
@@ -18,16 +18,18 @@ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order moveType);
 int OrderUnitCommand(Unit unit, Order moveType);
 
 //TERRAIN
-int RepeatSearch(Position coord, bool vert, int i);
-bool GoodSpot(Position pos);
+std::pair<bool, TilePosition> RepeatSearch(TilePosition coord, bool vert, int i, UnitType building, bool(*f)(TilePosition pos, UnitType building));
+bool GoodBuildingSpot(TilePosition pos, UnitType building);
 
-TilePosition FindSuitableBuildingTile(MyBot* bot, Position origin);
+TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin);
 TilePosition FindClosestMineralTile(Position origin);
 TilePosition FindClosestGasTile(Position origin);
 
-Position FindSuitableBuildingPos(Position origin);
-Position FindClosestMineralPos(Position origin);
-Position FindClosestGasPos(Position origin);
+bool CloserToOrig(Position origin, Position unitA, Position unitB);
+
+//Position FindSuitableBuildingPos(Position origin);
+//Position FindClosestMineralPos(TilePosition base);
+//Position FindClosestGasPos(TilePosition base);
 
 //MACRO
 int IdleWorkersWork(MyBot* bot);

@@ -12,6 +12,7 @@ BWTA::Region* enemy_base;
 //when a new game has been started with the bot.
 void MyBot::onStart()
 {
+	frameCount10 = 0;
 	frameCount100 = 0;
 	frameCount1000 = 0;
 	task = new subTask[12];
@@ -30,10 +31,15 @@ void MyBot::onStart()
 	currentSubTask = task[0];
 	currentSubTaskNr = 0;
 
-	basePosition = new Position[1];
+	//baseTile = new TilePosition[1];
 	for (auto unit : Broodwar->self()->getUnits())
 		if (unit->getType() == UnitTypes::Enum::Terran_Command_Center)
-			basePosition[0] = unit->getPosition();
+			baseTile.push_back(unit->getTilePosition());
+
+	//basePosition = new Position[1];
+	for (auto unit : Broodwar->self()->getUnits())
+		if (unit->getType() == UnitTypes::Enum::Terran_Command_Center)
+			basePosition.push_back(unit->getPosition());
 
 	Broodwar->sendText("Bot start");
 	//Enable flags
@@ -73,6 +79,7 @@ void MyBot::onStart()
 //This is the method called each frame. This is where the bot's logic
 //shall be called.
 void MyBot::onFrame() {
+	frameCount10++;
 	frameCount100++;
 	frameCount1000++;
 
@@ -82,11 +89,20 @@ void MyBot::onFrame() {
 	//Draw box on all friendly units
 	for (auto unit : Broodwar->self()->getUnits()) DrawBox(unit->getPosition(), 5);
 
+	//Print task
+	std::string a = 
+		"Current Task:\n   task " + std::to_string(currentSubTask.task) + "." + std::to_string(currentSubTask.step) +
+		"\n   constructing " + currentSubTask.construct.getName() + "\n   " +
+		std::to_string(currentSubTask.requiredUnits) + ", " + std::to_string(currentSubTask.completedUnits) + ", " +
+		std::to_string(currentSubTask.inProgressUnits);
+	DrawTextOnScreen(a);	
+
+	//Follow task
 	if (frameCount100 == 100) {
 		Broodwar->sendText("Unit create");
-		if (currentSubTask.completedUnits < currentSubTask.requiredUnits) {
+		if ((currentSubTask.completedUnits + currentSubTask.inProgressUnits) < currentSubTask.requiredUnits) {
 			if (currentSubTask.construct > 100 /* == UnitTypes::Buildings*/) {
-				if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(this, basePosition[0])))
+				if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(currentSubTask.construct, baseTile.at(0))))
 					currentSubTask.inProgressUnits++;
 				else
 					Broodwar->sendText("   Failed to build building");
@@ -99,8 +115,9 @@ void MyBot::onFrame() {
 			}
 			else Broodwar->sendText("   Failed to interprete unit type");
 		}
-		else if (currentSubTask.inProgressUnits == 0 && CountUnitType(currentSubTask.task) == currentSubTask.requiredUnits) {
-			currentSubTask = task[currentSubTaskNr + 1];
+		else if (currentSubTask.inProgressUnits == 0 && CountUnitType(currentSubTask.construct) == currentSubTask.requiredUnits) {
+			currentSubTaskNr++;
+			currentSubTask = task[currentSubTaskNr];
 			Broodwar->sendText("   Getting new task");
 		}
 		else if (currentSubTask.inProgressUnits > 0) Broodwar->sendText("   Current production not done");
@@ -110,23 +127,23 @@ void MyBot::onFrame() {
 	IdleWorkersWork(this);
 
 	/*if (frameCount100 == 100){
-	frameCount100 = 0;
-	//Order one of our workers to guard our chokepoint.
-	//Iterate through the list of units.
-	for (auto unit : Broodwar->self()->getUnits()){
-	//Check if unit is a worker.
-	if (unit->getType().isWorker()){
-	//Find guard point
-	Position guardPoint = findGuardPoint();
-	//Order the worker to move to the guard point
-	unit->rightClick(guardPoint);
-	//Only send the first worker.
-	break;
-	}
-	}
+		frameCount100 = 0;
+		//Order one of our workers to guard our chokepoint.
+		//Iterate through the list of units.
+		for (auto unit : Broodwar->self()->getUnits()){
+			//Check if unit is a worker.
+			if (unit->getType().isWorker()){
+				//Find guard point
+				Position guardPoint = findGuardPoint();
+				//Order the worker to move to the guard point
+				unit->rightClick(guardPoint);
+				//Only send the first worker.
+				break;
+			}
+		}
 	}*/
 
-
+	if (frameCount10 == 10) frameCount10 = 0;
 	if (frameCount100 == 100) frameCount100 = 0;
 	if (frameCount1000 == 1000) frameCount1000 = 0;
 }

@@ -1,15 +1,20 @@
 #include "Brain.h"
 
 //HELPER
-void DrawBox(Position position, int size) {
+/*(X)*/ void DrawBox(Position position, int size) {
 	int HBS = size / 2;
 	Broodwar->drawBoxMap({ position.x - HBS, position.y - HBS }, { position.x + HBS, position.y + HBS }, 111, true);
 }
 
-void DrawTextOnObject(Unit object, std::string text, int offset) {}
+/*( )*/ void DrawTextOnObject(Unit object, std::string text, int offset) {}
+
+/*(X)*/ void DrawTextOnScreen(std::string text) {
+	const char* charText = text.c_str();
+	Broodwar->drawTextScreen({ 30,30 }, charText);
+}
 
 //BUILDING COMMANDS
-int BuildBuildingLocation(UnitType building, TilePosition position) {
+/*(X)*/ int BuildBuildingLocation(UnitType building, TilePosition position) {
 	for (auto unit : Broodwar->self()->getUnits())
 		if (unit->getType().isWorker())
 			if (unit->build(building, position)) return 1;
@@ -17,28 +22,48 @@ int BuildBuildingLocation(UnitType building, TilePosition position) {
 	return 0;
 }
 
-int TrainUnit(UnitType unitType) {
+/*(X)*/ int TrainUnit(UnitType unitType) {
+	std::vector<Unit> vectorList;
 	for (auto building : Broodwar->self()->getUnits())
 		if (building->getType() == unitType.whatBuilds().first)
-			if (building->train(unitType)) return 1;
+			vectorList.push_back(building);
+	
+	while (vectorList.size() > 0) {
+		if (!vectorList.at(vectorList.size() - 1)->isTraining() && !vectorList.at(vectorList.size() - 1)->isResearching()) {
+			vectorList.at(vectorList.size() - 1)->train(unitType);
+			return 1;
+		}
+		else vectorList.pop_back();
+	}
 
 	return 0;
 }
 
-int BuildAddOn(Unit building, UnitType addOn) {
-	if (!building->buildAddon(addOn)) return 0;
+/*(X)*/ int BuildAddOn(Unit building, UnitType addOn) {
+	if (building->buildAddon(addOn)) return 1;
 
-	return 1;
+	return 0;
 }
 
-int Research(Unit building, TechType tech) {
-	if (!building->research(tech)) return 0;
+/*(X)*/ int Research(TechType tech) {
+	std::vector<Unit> vectorList;
+	for (auto building : Broodwar->self()->getUnits())
+		if (building->getType() == tech.whatResearches())
+			vectorList.push_back(building);
 
-	return 1;
+	while (vectorList.size() > 0) {
+		if (!vectorList.at(vectorList.size() - 1)->isTraining() && !vectorList.at(vectorList.size() - 1)->isResearching()) {
+			vectorList.at(vectorList.size() - 1)->research(tech);
+			return 1;
+		}
+		else vectorList.pop_back();
+	}
+
+	return 0;
 }
 
 //UNIT COMMANDS
-int MoveUnitDifference(Unit unit, int x, int y, Order moveType = Orders::Move) {
+/*(X)*/ int MoveUnitDifference(Unit unit, int x, int y, Order moveType = Orders::Move) {
 	Position pos = unit->getPosition();
 	pos.x += x;
 	pos.y += y;
@@ -46,7 +71,7 @@ int MoveUnitDifference(Unit unit, int x, int y, Order moveType = Orders::Move) {
 	return 1;
 }
 
-int OrderUnitLocation(Unit unit, Position position = {0,0}, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitLocation(Unit unit, Position position = { 0,0 }, Order command = Orders::Move) {
 	switch (command) {
 	case Orders::Enum::Move:
 		if (!unit->rightClick(position)) return 0;	//OBS! right click
@@ -64,7 +89,7 @@ int OrderUnitLocation(Unit unit, Position position = {0,0}, Order command = Orde
 	return 1;
 }
 
-int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command = Orders::Move) {
 	switch (command) {
 	case Orders::Enum::AttackUnit:
 		if (!firstUnit->attack(secondUnit)) return 0;
@@ -82,7 +107,7 @@ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command = Orders::Mov
 	return 1;
 }
 
-int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
 	switch (command) {
 	case Orders::Enum::HoldPosition:
 		if (!unit->holdPosition()) return 0;
@@ -119,95 +144,133 @@ int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
 }
 
 //TERRAIN
-int RepeatSearch(Position coord, bool vert, int i) {
+/*(X)*/ std::pair<bool, TilePosition> RepeatSearch(TilePosition coord, bool vert, int i, UnitType building,	bool(*f)(TilePosition pos, UnitType building)) {
 	for (int c = -i; c <= i; c++) {
 		if (vert == false) {
-			if (GoodSpot({coord.x+c, coord.y})) {}
+			if (GoodBuildingSpot({coord.x+c, coord.y}, building)) {
+				return { true, { coord.x + c, coord.y } };
+			}
 		}
 		else {
-			if (GoodSpot({coord.x, coord.y+c})) {}
+			if (GoodBuildingSpot({coord.x, coord.y+c}, building)) {
+				return { true, { coord.x, coord.y + c } };
+			}
 		}
 	}
-	return 1;
+	return { false, {0,0} };
 }
 
-//canBuildHere (TilePosition position, UnitType type, Unit builder=nullptr, bool checkExplored=false)=0
-bool GoodSpot(Position pos) {
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 6; j++) {
+/*(X)*/ bool GoodBuildingSpot(TilePosition pos, UnitType building) {
+	if (Broodwar->canBuildHere(pos, building)) {
+		TilePosition testPos1 = { pos.x - 1, pos.y - 1 };
+		TilePosition testPos2 = { pos.x + 1, pos.y - 1 };
+		TilePosition testPos3 = { pos.x - 1, pos.y + 1 };
+		TilePosition testPos4 = { pos.x + 1, pos.y + 1 };
 
+		if (Broodwar->canBuildHere(testPos1, building) && Broodwar->canBuildHere(testPos2, building) &&
+			Broodwar->canBuildHere(testPos3, building) && Broodwar->canBuildHere(testPos4, building)) {
+			return true;
 		}
 	}
-	return 1;
+	return false;
 }
 
-TilePosition FindSuitableBuildingTile(MyBot* bot, Position origin) {	//place building in center of free 6x6
-	//Position guardPoint = bot->findGuardPoint();
+/*(X)*/ TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin) {	//place building in open area
 	int tileSearchArea = 48;
-	for (int i = 1; i < tileSearchArea; i++) {		
-		RepeatSearch({ origin.x - i, origin.y }, false, i);	//left
-		RepeatSearch({ origin.x + i, origin.y }, false, i);	//right
-		RepeatSearch({ origin.x, origin.y + i }, true, i);	//up
-		RepeatSearch({ origin.x, origin.y - i }, true, i);	//down
+	std::pair<bool, TilePosition> test;
+	for (int i = 2; i < tileSearchArea; i++) {
+		test = RepeatSearch({ origin.x - i, origin.y }, false, i, building, GoodBuildingSpot);	//left
+		if (test.first == true) return test.second;
+
+		test = RepeatSearch({ origin.x + i, origin.y }, false, i, building, GoodBuildingSpot);	//right
+		if (test.first == true) return test.second;
+
+		test = RepeatSearch({ origin.x, origin.y + i }, false, i, building, GoodBuildingSpot);	//up
+		if (test.first == true) return test.second;
+
+		test = RepeatSearch({ origin.x, origin.y - i }, false, i, building, GoodBuildingSpot);	//down
+		if (test.first == true) return test.second;
 	}
 	return {1,1};
 }
 
-TilePosition FindClosestMineralTile(Position origin) {
-	return { 1,1 };
+/*(?)*/ Unit FindClosestMineral(Position origin) {
+	std::vector<Unit> MineralVector;
+	for (auto thing : Broodwar->self()->getUnits())
+		if (thing->getType() == UnitTypes::Enum::Resource_Mineral_Field)
+			MineralVector.push_back(thing);
+
+	while (MineralVector.size() > 1) {
+		if (CloserToOrig(origin, MineralVector.at(0)->getPosition(), MineralVector.at(1)->getPosition()))
+			MineralVector.erase(MineralVector.begin() + 1);
+		else MineralVector.erase(MineralVector.begin());
+	}
+
+	return MineralVector.at(0);
 }
 
-TilePosition FindClosestGasTile(Position origin) {
-	return { 1,1 };
+/*(?)*/ Unit FindClosestGas(Position origin) {
+	std::vector<Unit> GasVector;
+	for (auto thing : Broodwar->self()->getUnits())
+		if (thing->getType() == UnitTypes::Enum::Resource_Vespene_Geyser)
+			GasVector.push_back(thing);
+
+	while (GasVector.size() > 1) {
+		if (CloserToOrig(origin, GasVector.at(0)->getPosition(), GasVector.at(1)->getPosition()))
+			GasVector.erase(GasVector.begin() + 1);
+		else 
+			GasVector.erase(GasVector.begin());
+	}
+
+	return GasVector.at(0);
 }
 
-Position FindSuitableBuildingPos(Position origin) {
-	return { 1,1 };
-}
+/*(X)*/ bool CloserToOrig(Position origin, Position unitAPos, Position unitBPos) {
+	float distA = sqrt(pow((abs(unitAPos.x - origin.x)), 2) + pow((abs(unitAPos.y - origin.y)), 2));
+	float distB = sqrt(pow((abs(unitBPos.x - origin.x)), 2) + pow((abs(unitBPos.y - origin.y)), 2));
 
-Position FindClosestMineralPos(Position origin) {
-	return {1,1};
+	if (distA < distB) return true;
+	return false;
 }
-
-Position FindClosestGasPos(Position origin) {}
 
 //MACRO
-int IdleWorkersWork(MyBot* bot) {
+/*(X)*/ int IdleWorkersWork(MyBot* bot) {
 	for (auto unit : Broodwar->self()->getUnits()) {
 		if (unit->getType().isWorker() && unit->isIdle()) {
-			OrderUnitLocation(unit, FindClosestMineralPos(bot->basePosition[0]));
+			//Unit mineral = FindClosestMineral(bot->basePosition.at(0));
+			OrderUnitLocation(unit, {0,0}/*mineral->getPosition()*/);
 		}
 	}
 	return 1;
 }
 
-int BaseBuilder() {
+/*( )*/ int BaseBuilder() {
 	return 1;
 }
 
-int ArmyCreator() {
+/*( )*/ int ArmyCreator() {
 	return 1;
 }
 
-int Scout() {
+/*( )*/ int Scout() {
 	return 1;
 }
 
 //MICRO
-int GroupUp() {
+/*( )*/ int GroupUp() {
 	return 1;
 }
 
-int CreateSquad() {
+/*( )*/ int CreateSquad() {
 	return 1;
 }
 
-int SquadOrder() {
+/*( )*/ int SquadOrder() {
 	return 1;
 }
 
 //GLOBAL
-int CountUnitType(UnitType searchUnit) {
+/*(X)*/ int CountUnitType(UnitType searchUnit) {
 	int count = 0;
 	for (auto unit : Broodwar->self()->getUnits()) {
 		if (unit->getType() == searchUnit) {
