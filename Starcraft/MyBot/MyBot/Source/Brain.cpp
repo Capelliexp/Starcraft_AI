@@ -62,6 +62,14 @@
 	return 0;
 }
 
+/*(X)*/ int BuildRefinery(Unit gas) {
+	for (auto unit : Broodwar->self()->getUnits())
+		if (unit->getType().isWorker())
+			if (unit->build(UnitTypes::Enum::Terran_Refinery, gas->getTilePosition())) return 1;
+
+	return 0;
+}
+
 //UNIT COMMANDS
 /*(X)*/ int MoveUnitDifference(Unit unit, int x, int y, Order moveType = Orders::Move) {
 	Position pos = unit->getPosition();
@@ -91,6 +99,9 @@
 
 /*(X)*/ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command = Orders::Move) {
 	switch (command) {
+	case Orders::Enum::Move:
+		if (!firstUnit->rightClick(secondUnit)) return 0;
+		break;
 	case Orders::Enum::AttackUnit:
 		if (!firstUnit->attack(secondUnit)) return 0;
 		break;
@@ -194,11 +205,10 @@
 	return {1,1};
 }
 
-/*(?)*/ Unit FindClosestMineral(Position origin) {
+/*(X)*/ Unit FindClosestMineral(Position origin) {
 	std::vector<Unit> MineralVector;
-	for (auto thing : Broodwar->self()->getUnits())
-		if (thing->getType() == UnitTypes::Enum::Resource_Mineral_Field)
-			MineralVector.push_back(thing);
+	for (auto unit : Broodwar->getMinerals())
+		MineralVector.push_back(unit);
 
 	while (MineralVector.size() > 1) {
 		if (CloserToOrig(origin, MineralVector.at(0)->getPosition(), MineralVector.at(1)->getPosition()))
@@ -209,25 +219,23 @@
 	return MineralVector.at(0);
 }
 
-/*(?)*/ Unit FindClosestGas(Position origin) {
+/*(X)*/ Unit FindClosestGas(Position origin) {
 	std::vector<Unit> GasVector;
-	for (auto thing : Broodwar->self()->getUnits())
-		if (thing->getType() == UnitTypes::Enum::Resource_Vespene_Geyser)
-			GasVector.push_back(thing);
+	for (auto unit : Broodwar->getGeysers())
+		GasVector.push_back(unit);
 
 	while (GasVector.size() > 1) {
 		if (CloserToOrig(origin, GasVector.at(0)->getPosition(), GasVector.at(1)->getPosition()))
 			GasVector.erase(GasVector.begin() + 1);
-		else 
-			GasVector.erase(GasVector.begin());
+		else GasVector.erase(GasVector.begin());
 	}
 
 	return GasVector.at(0);
 }
 
 /*(X)*/ bool CloserToOrig(Position origin, Position unitAPos, Position unitBPos) {
-	float distA = sqrt(pow((abs(unitAPos.x - origin.x)), 2) + pow((abs(unitAPos.y - origin.y)), 2));
-	float distB = sqrt(pow((abs(unitBPos.x - origin.x)), 2) + pow((abs(unitBPos.y - origin.y)), 2));
+	double distA = sqrt(pow((abs(unitAPos.x - origin.x)), 2) + pow((abs(unitAPos.y - origin.y)), 2));
+	double distB = sqrt(pow((abs(unitBPos.x - origin.x)), 2) + pow((abs(unitBPos.y - origin.y)), 2));
 
 	if (distA < distB) return true;
 	return false;
@@ -237,8 +245,8 @@
 /*(X)*/ int IdleWorkersWork(MyBot* bot) {
 	for (auto unit : Broodwar->self()->getUnits()) {
 		if (unit->getType().isWorker() && unit->isIdle()) {
-			//Unit mineral = FindClosestMineral(bot->basePosition.at(0));
-			OrderUnitLocation(unit, {0,0}/*mineral->getPosition()*/);
+			Unit mineral = FindClosestMineral(bot->BaseLocations.at(0)->getPosition());
+			OrderUnitOnUnit(unit, mineral);
 		}
 	}
 	return 1;

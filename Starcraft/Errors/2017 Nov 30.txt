@@ -1,0 +1,157 @@
+
+//////////////////////////////////////////////////
+TIME: Thu Nov 30 11:57:59 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 767FCBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F48952E    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0F4895CA    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:240
+  MyBot.dll         0x0F48AE8E    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:148
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Nov 30 11:58:28 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FAA4
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F8
+  EBP: 0019FA54
+  EIP: 767FCBB2
+  ESP: 0019F9F8
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F88948E    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0F88952A    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:240
+  MyBot.dll         0x0F88ADCE    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:148
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Nov 30 12:00:36 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FAA4
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F8
+  EBP: 0019FA54
+  EIP: 767FCBB2
+  ESP: 0019F9F8
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F91948E    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0F91952A    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:240
+  MyBot.dll         0x0F91ADCE    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:148
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  MyBot.dll         0x0FA00000    ??$_Uninit_def_fill_n@PAV?$vector@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@V?$allocator@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@@2@@std@@IV?$allocator@V?$vector@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@V?$allocator@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@@2@@std@@@2@V12@@std@@YAXPAV?$vector@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@V?$allocator@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@@2@@0@IAAU?$_Wrap_alloc@V?$allocator@V?$vector@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@V?$allocator@U?$pair@VUnitType@BWAPI@@V?$Point@H$07@2@@std@@@2@@std@@@std@@@0@0U_Nonscalar_ptr_iterator_tag@0@@Z
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Nov 30 12:02:44 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x767FCBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FADC
+  ESI: 71F45734
+  EBX: 00000000
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019FA30
+  EBP: 0019FA8C
+  EIP: 767FCBB2
+  ESP: 0019FA30
+STACK:
+  KERNELBASE.dll    0x767FCBB2    RaiseException
+  MSVCR120.dll      0x73058A49    _CxxThrowException
+  MSVCP120.dll      0x71F13A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FBF9322    FindClosestMineral
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:209
+  MyBot.dll         0x0FBF93CA    IdleWorkersWork
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:240
+  MyBot.dll         0x0FBFAC6E    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:148
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

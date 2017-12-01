@@ -5,11 +5,13 @@
 void DrawBox(Position position, int size);
 void DrawTextOnObject(Unit object, std::string text, int offset);
 void DrawTextOnScreen(std::string text);
-//BUILD
+
+//BUILDING COMMANDS
 int BuildBuildingLocation(UnitType building, TilePosition position);
 int TrainUnit(UnitType unit);
 int BuildAddOn(Unit building, UnitType addOn);
 int Research(TechType tech);
+int BuildRefinery(Unit gas);
 
 //UNIT COMMANDS
 int MoveUnitDifference(Unit unit, int x, int y, Order moveType);
@@ -22,8 +24,8 @@ std::pair<bool, TilePosition> RepeatSearch(TilePosition coord, bool vert, int i,
 bool GoodBuildingSpot(TilePosition pos, UnitType building);
 
 TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin);
-TilePosition FindClosestMineralTile(Position origin);
-TilePosition FindClosestGasTile(Position origin);
+Unit FindClosestMineral(Position origin);
+Unit FindClosestGas(Position origin);
 
 bool CloserToOrig(Position origin, Position unitA, Position unitB);
 

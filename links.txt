@@ -1,3 +1,4 @@
 http://i.imgur.com/lppnE.png
 https://bwapi.github.io/annotated.html
 http://pages.cs.wisc.edu/~starr/bots/EISBot-src/html/classBWAPI_1_1TilePosition.html
+http://pages.cs.wisc.edu/~starr/bots/Undermind-src/html/namespaceBWTA.html

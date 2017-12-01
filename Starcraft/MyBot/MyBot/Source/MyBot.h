@@ -16,7 +16,7 @@ using namespace BWAPI;
 using namespace BWTA;
 
 typedef struct {
-	short task, step;
+	short task, step, base;
 	UnitType construct;
 	short requiredUnits, completedUnits, inProgressUnits;
 } subTask;
@@ -57,7 +57,9 @@ public:
 	subTask* task;
 	subTask currentSubTask;
 	int currentSubTaskNr;
-	std::vector<TilePosition> baseTile;
-	std::vector<Position> basePosition;
+	//std::vector<TilePosition> baseTile;
+	//std::vector<Position> basePosition;
+
+	std::vector<BWTA::BaseLocation*> BaseLocations;
 
 };
