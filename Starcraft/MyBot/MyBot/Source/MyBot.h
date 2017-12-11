@@ -54,12 +54,15 @@ public:
 	short frameCount10;
 	short frameCount100;
 	short frameCount1000;
+	short sanityCount;
+
 	subTask* task;
 	subTask currentSubTask;
 	int currentSubTaskNr;
-	//std::vector<TilePosition> baseTile;
-	//std::vector<Position> basePosition;
 
 	std::vector<BWTA::BaseLocation*> BaseLocations;
+	std::vector<BWTA::BaseLocation*> EnemyBase;
+
+	Position armyGroupPoint;
 
 };

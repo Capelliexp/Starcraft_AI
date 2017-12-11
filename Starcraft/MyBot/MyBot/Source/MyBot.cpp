@@ -10,44 +10,35 @@ BWTA::Region* enemy_base;
 
 //This is the startup method. It is called once
 //when a new game has been started with the bot.
-void MyBot::onStart()
-{
-	frameCount10 = 0;
-	frameCount100 = 0;
-	frameCount1000 = 0;
-	task = new subTask[12];
+void MyBot::onStart(){
+	Broodwar->sendText("Bot start");
+
+	frameCount10 = 1;
+	frameCount100 = 2;
+	frameCount1000 = 3;
+	sanityCount = 0;
+
+	task = new subTask[13];
 	task[0] =  { 1, 1, 0, UnitTypes::Enum::Terran_Supply_Depot, 2, 0, 0 };
-	task[1] =  { 1, 2, 0, UnitTypes::Enum::Terran_Barracks, 2, 0, 0 };	//obs
-	task[2] =  { 1, 3, 0, UnitTypes::Enum::Terran_Marine, 15, 0, 0 };	//obs
+	task[1] =  { 1, 2, 0, UnitTypes::Enum::Terran_Barracks, 1, 0, 0 };
+	task[2] =  { 1, 3, 0, UnitTypes::Enum::Terran_Marine, 10, 0, 0 };
 	task[3] =  { 2, 1, 0, UnitTypes::Enum::Terran_Academy, 1, 0, 0 };
 	task[4] =  { 2, 2, 0, UnitTypes::Enum::Terran_Refinery, 1, 0, 0 };
 	task[5] =  { 2, 3, 0, UnitTypes::Enum::Terran_Medic, 3, 0, 0 };
 	task[6] =  { 2, 4, 0, UnitTypes::Enum::Terran_SCV, 5, 0, 0 };
 	task[7] =  { 3, 1, 0, UnitTypes::Enum::Terran_Factory, 1, 0, 0 };
 	task[8] =  { 3, 2, 0, UnitTypes::Enum::Terran_Machine_Shop, 1, 0, 0 };
-	task[9] =  { 3, 3, 0, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 0, 0 };
-	task[10] = { 4, 1, 1, UnitTypes::Enum::Terran_Command_Center, 1, 0, 0 };
-	task[11] = { 4, 2, 1, UnitTypes::Enum::Terran_SCV, 4, 0, 0 };
+	task[9] =  { 3, 3, 0, UnitTypes::Enum::Terran_Supply_Depot, 2, 0, 0 };
+	task[10] =  { 3, 4, 0, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 0, 0 };
+	task[11] = { 4, 1, 1, UnitTypes::Enum::Terran_Command_Center, 1, 0, 0 };
+	task[12] = { 4, 2, 1, UnitTypes::Enum::Terran_SCV, 4, 0, 0 };
 	currentSubTask = task[0];
 	currentSubTaskNr = 0;
 
-	////baseTile = new TilePosition[1];
-	//for (auto unit : Broodwar->self()->getUnits())
-	//	if (unit->getType() == UnitTypes::Enum::Terran_Command_Center)
-	//		baseTile.push_back(unit->getTilePosition());
-
-	////basePosition = new Position[1];
-	//for (auto unit : Broodwar->self()->getUnits())
-	//	if (unit->getType() == UnitTypes::Enum::Terran_Command_Center)
-	//		basePosition.push_back(unit->getPosition());
-
-	Broodwar->setLocalSpeed(15);	//THE NEED FOR SPEED
-
-	Broodwar->sendText("Bot start");
-	//Enable flags
 	Broodwar->enableFlag(Flag::UserInput);
-	//Uncomment to enable complete map information
-	//Broodwar->enableFlag(Flag::CompleteMapInformation);
+	Broodwar->setLocalSpeed(5);	//THE NEED FOR SPEED	
+	//Broodwar->enableFlag(Flag::CompleteMapInformation);	//complete map information
+	Broodwar->sendText("power overwhelming");
 
 	//Start analyzing map data
 	BWTA::readMap();
@@ -56,32 +47,56 @@ void MyBot::onStart()
 	//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL); //Threaded version
 	AnalyzeThread();
 
-	for(auto base : home->getBaseLocations()){
-		BaseLocations.push_back(base);
+	for (auto a : home->getBaseLocations()) {	//my base
+		this->BaseLocations.push_back(a);
 	}
-	
-	int basesFound = 0;
-	for (auto base : BaseLocations) {
-		for (auto choke : base->getRegion()->getChokepoints()) {
-			for (int i = 0; i < 2; i++) {
-				auto region = (i == 0 ? choke->getRegions().first : choke->getRegions().second);
-				for (auto savedBase : BaseLocations) {
-					for (auto regionBaseLocations : region->getBaseLocations()) {
-						if (region != savedBase->getRegion()) {
-							BaseLocations.push_back(regionBaseLocations);
-							basesFound++;
-						}
-						if (basesFound > 2) {
-							goto endloop;
-						}
-					}
-				}
-			}
-		}
-	}
-endloop:
-	Broodwar->sendText("base vector filled");
 
+	std::set< BaseLocation *> AllBases = BWTA::getBaseLocations();
+	BaseLocation* highest = *AllBases.begin();
+	BaseLocation* lowest = *AllBases.begin();
+	AllBases.erase(0);
+
+	for (unsigned int i = 1; i < AllBases.size(); i++) {
+		BaseLocation* contender = *AllBases.begin();
+		if (CloserToOrig(BaseLocations.at(0)->getPosition(), contender->getPosition(), highest->getPosition())) highest = contender;
+		else if (CloserToOrig(BaseLocations.at(0)->getPosition(), lowest->getPosition(), contender->getPosition())) lowest = contender;
+		AllBases.erase(0);
+	}
+	BaseLocations.push_back(highest);
+	EnemyBase.push_back(lowest);
+
+
+
+//	for(auto base : home->getBaseLocations()){
+//		BaseLocations.push_back(base);
+//	}
+//	
+//	int basesFound = 0;
+//	for (auto base : BaseLocations) {
+//		for (auto choke : base->getRegion()->getChokepoints()) {
+//			if (basesFound == 0) armyGroupPoint == choke->getCenter();	//army group pos
+//			for (int i = 0; i < 2; i++) {
+//				auto region = (i == 0 ? choke->getRegions().first : choke->getRegions().second);
+//				for (auto savedBase : BaseLocations) {
+//					for (auto regionBaseLocations : region->getBaseLocations()) {
+//						if (region != savedBase->getRegion()) {
+//							BaseLocations.push_back(regionBaseLocations);
+//							basesFound++;
+//						}
+//						if (basesFound > 2) {
+//							goto endloop;
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
+//endloop:
+//	Broodwar->sendText("base vector filled");
+//
+	for (auto choke : home->getChokepoints()) {
+		armyGroupPoint = choke->getCenter();
+	}
 }
 
 //This is the method called each frame. This is where the bot's logic
@@ -95,7 +110,8 @@ void MyBot::onFrame() {
 	if (analyzed) drawTerrainData();
 
 	//Draw box on all friendly units
-	for (auto unit : Broodwar->self()->getUnits()) DrawBox(unit->getPosition(), 5);
+	//for (auto unit : Broodwar->self()->getUnits()) DrawBox(unit->getPosition(), 5);
+	for(auto base : BWTA::getBaseLocations()) DrawBox(base->getPosition(), 10, 222);
 
 	//Print task
 	std::string a = 
@@ -103,40 +119,64 @@ void MyBot::onFrame() {
 		"\n   constructing " + currentSubTask.construct.getName() + " at base " + std::to_string(currentSubTask.base) + "\n   " +
 		std::to_string(currentSubTask.requiredUnits) + ", " + std::to_string(currentSubTask.completedUnits) + ", " +
 		std::to_string(currentSubTask.inProgressUnits);
-	DrawTextOnScreen(a);	
+	DrawTextOnScreen(a, 10, 10);
 
 	//Follow task
-	if (frameCount100 == 100) {
+	if (frameCount100 == 100 && currentSubTaskNr < 13) {
 		if ((currentSubTask.completedUnits + currentSubTask.inProgressUnits) < currentSubTask.requiredUnits) {
 			if (currentSubTask.construct > 100 /* == UnitTypes::Buildings*/) {
 				if (currentSubTask.construct == UnitTypes::Enum::Terran_Refinery) {
-					if (BuildRefinery(FindClosestGas(BaseLocations.at(0)->getPosition()))) {
+					if (BuildRefinery(FindClosestGas(BaseLocations.at(currentSubTask.base)->getPosition()))) {
 						currentSubTask.inProgressUnits++;
-						Broodwar->sendText("Creating Unit");
+						//Broodwar->sendText("Building refinery");
 					}
-					else
-						Broodwar->sendText("Failed to build refinery");
+					else {
+						//Broodwar->sendText("Failed to build refinery");
+					}
 				}
-				if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(currentSubTask.construct, BaseLocations.at(0)->getTilePosition()))){
+				else if (currentSubTask.construct == UnitTypes::Enum::Terran_Comsat_Station ||
+					currentSubTask.construct == UnitTypes::Enum::Terran_Control_Tower ||
+					currentSubTask.construct == UnitTypes::Enum::Terran_Covert_Ops ||
+					currentSubTask.construct == UnitTypes::Enum::Terran_Machine_Shop ||
+					currentSubTask.construct == UnitTypes::Enum::Terran_Nuclear_Silo ||
+					currentSubTask.construct == UnitTypes::Enum::Terran_Physics_Lab) {
+					for (auto unit : Broodwar->self()->getUnits()) {
+						if (unit->canBuildAddon(currentSubTask.construct)) {
+							if (BuildAddOn(unit, currentSubTask.construct)) {
+								currentSubTask.inProgressUnits++;
+								//Broodwar->sendText("Building addon");
+							}
+							else {
+								//Broodwar->sendText("Failed to build addon");
+							}
+						}
+					}
+				}
+				else if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(currentSubTask.construct, BaseLocations.at(currentSubTask.base)->getTilePosition(), 2))){
 					currentSubTask.inProgressUnits++;
-					Broodwar->sendText("Creating Unit");
+					//Broodwar->sendText("Building building");
 				}
-				else
-					Broodwar->sendText("Failed to build building");
+				else {
+					//Broodwar->sendText("Failed to build building");
+				}
 			}
 			else if (currentSubTask.construct < 100 /* == UnitTypes::AllUnits*/) {
 				if (TrainUnit(currentSubTask.construct)) {
 					currentSubTask.inProgressUnits++;
-					Broodwar->sendText("Creating Unit");
+					//Broodwar->sendText("Creating unit");
 				}
-				else 
-					Broodwar->sendText("Failed to train unit");
+				else {
+					//Broodwar->sendText("Failed to train unit");
+				}
 			}
-			else Broodwar->sendText("Failed to interprete unit type");
+			else {
+				Broodwar->sendText("Failed to interprete unit type");
+			}
 		}
 		//else if (currentSubTask.inProgressUnits == 0 && CountUnitType(currentSubTask.construct) >= currentSubTask.requiredUnits) {
 		else if (currentSubTask.completedUnits == currentSubTask.requiredUnits) {
 			currentSubTaskNr++;
+			sanityCount = 0;
 			currentSubTask = task[currentSubTaskNr];
 			Broodwar->sendText("Getting new task");
 		}
@@ -149,29 +189,20 @@ void MyBot::onFrame() {
 			}
 			if ((constructionCounter + workersWorkingCounter) < currentSubTask.requiredUnits)
 				currentSubTask.inProgressUnits--;
-			else Broodwar->sendText("Current production not done");
+			else {
+				sanityCount++;
+				//Broodwar->sendText("Current production not done");
+				if (sanityCount > 20) {
+					currentSubTask.inProgressUnits--;
+					sanityCount = 0;
+				}
+			}
 		}
 		else Broodwar->sendText("Failed to start new task");
 	}
 
-	IdleWorkersWork(this);
-
-	/*if (frameCount100 == 100){
-		frameCount100 = 0;
-		//Order one of our workers to guard our chokepoint.
-		//Iterate through the list of units.
-		for (auto unit : Broodwar->self()->getUnits()){
-			//Check if unit is a worker.
-			if (unit->getType().isWorker()){
-				//Find guard point
-				Position guardPoint = findGuardPoint();
-				//Order the worker to move to the guard point
-				unit->rightClick(guardPoint);
-				//Only send the first worker.
-				break;
-			}
-		}
-	}*/
+	if (frameCount100 == 100) IdleUnits(this);
+	if (frameCount10 == 10 && currentSubTaskNr > 10) Attack(this);
 
 	if (frameCount10 == 10) frameCount10 = 0;
 	if (frameCount100 == 100) frameCount100 = 0;
@@ -448,5 +479,12 @@ void MyBot::onUnitComplete(BWAPI::Unit unit)
 	if (unit->getType() == currentSubTask.construct) {
 		currentSubTask.completedUnits++;
 		currentSubTask.inProgressUnits--;
+	}
+	if (unit->getType().getID() != (int)UnitTypes::Enum::Terran_SCV) {
+		//Broodwar->sendText("unit created with id %d", unit->getType().getID());
+		OrderUnitLocation(unit, armyGroupPoint);
+	}
+	else {
+		IdleWorkersWork(this, unit);
 	}
 }

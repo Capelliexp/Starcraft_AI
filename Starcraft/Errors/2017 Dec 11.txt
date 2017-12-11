@@ -1,0 +1,190 @@
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 14:55:12 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0F44ADE0    MyBot.dll
+REGISTERS:
+  EDI: 049F5C60
+  ESI: 049F5C60
+  EBX: 00000000
+  EDX: 04AB80C0
+  ECX: 00000000
+  EAX: 049F5C60
+  EBP: 0019FD30
+  EIP: 0F44ADE0
+  ESP: 0019FC8C
+STACK:
+  MyBot.dll         0x0F44ADE0    MyBot::onStart
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:53
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 14:56:26 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0FE0AE60    MyBot.dll
+REGISTERS:
+  EDI: 049D7B78
+  ESI: 049D7B78
+  EBX: 00000000
+  EDX: 049FFFC8
+  ECX: 00000000
+  EAX: 049D7B78
+  EBP: 0019FD30
+  EIP: 0FE0AE60
+  ESP: 0019FC8C
+STACK:
+  MyBot.dll         0x0FE0AE60    MyBot::onStart
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:53
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 14:58:56 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0F2DAE60    MyBot.dll
+REGISTERS:
+  EDI: 04AB8848
+  ESI: 04AB8848
+  EBX: 00000000
+  EDX: 04AE2978
+  ECX: 00000000
+  EAX: 04AB8848
+  EBP: 0019FD30
+  EIP: 0F2DAE60
+  ESP: 0019FC8C
+STACK:
+  MyBot.dll         0x0F2DAE60    MyBot::onStart
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:53
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 15:01:08 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0F3BAE60    MyBot.dll
+REGISTERS:
+  EDI: 04A99C98
+  ESI: 04A99C98
+  EBX: 00000000
+  EDX: 04AC56C8
+  ECX: 00000000
+  EAX: 04A99C98
+  EBP: 0019FD30
+  EIP: 0F3BAE60
+  ESP: 0019FC8C
+STACK:
+  MyBot.dll         0x0F3BAE60    MyBot::onStart
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:53
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 15:08:47 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0FB2AE60    MyBot.dll
+REGISTERS:
+  EDI: 04A47480
+  ESI: 04A47480
+  EBX: 00000000
+  EDX: 04A72AC0
+  ECX: 00000000
+  EAX: 04A47480
+  EBP: 0019FD30
+  EIP: 0FB2AE60
+  ESP: 0019FC8C
+STACK:
+  MyBot.dll         0x0FB2AE60    MyBot::onStart
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:53
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 11 16:07:57 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Access_Denied
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x730757D0    MSVCR120.dll
+REGISTERS:
+  EDI: 0019FCFC
+  ESI: 000000B0
+  EBX: 00000000
+  EDX: FFFFFFFF
+  ECX: 000000B0
+  EAX: 7FFFFFFE
+  EBP: 0019FB7C
+  EIP: 730757D0
+  ESP: 0019F8F0
+STACK:
+  MSVCR120.dll      0x730757D0    islower
+  MSVCR120.dll      0x730E4DFF    _vsnprintf_l
+  MSVCR120.dll      0x730E4D79    _vsnprintf
+  BWAPI.dll         0x10035FC2      ----
+  MyBot.dll         0x0FB3F557    ?sendText@Game@BWAPI@@QAAXPBDZZ
+  BWAPI.dll         0x1003481A      ----
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

@@ -1,16 +1,16 @@
 #include "Brain.h"
 
 //HELPER
-/*(X)*/ void DrawBox(Position position, int size) {
+/*(X)*/ void DrawBox(Position position, int size, int color) {
 	int HBS = size / 2;
 	Broodwar->drawBoxMap({ position.x - HBS, position.y - HBS }, { position.x + HBS, position.y + HBS }, 111, true);
 }
 
 /*( )*/ void DrawTextOnObject(Unit object, std::string text, int offset) {}
 
-/*(X)*/ void DrawTextOnScreen(std::string text) {
+/*(X)*/ void DrawTextOnScreen(std::string text, int x, int y) {
 	const char* charText = text.c_str();
-	Broodwar->drawTextScreen({ 30,30 }, charText);
+	Broodwar->drawTextScreen({ x,y }, charText);
 }
 
 //BUILDING COMMANDS
@@ -71,7 +71,7 @@
 }
 
 //UNIT COMMANDS
-/*(X)*/ int MoveUnitDifference(Unit unit, int x, int y, Order moveType = Orders::Move) {
+/*(X)*/ int MoveUnitDifference(Unit unit, int x, int y, Order moveType) {
 	Position pos = unit->getPosition();
 	pos.x += x;
 	pos.y += y;
@@ -79,7 +79,7 @@
 	return 1;
 }
 
-/*(X)*/ int OrderUnitLocation(Unit unit, Position position = { 0,0 }, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitLocation(Unit unit, Position position, Order command) {
 	switch (command) {
 	case Orders::Enum::Move:
 		if (!unit->rightClick(position)) return 0;	//OBS! right click
@@ -90,6 +90,9 @@
 	case Orders::Enum::Patrol:
 		if (!unit->patrol(position)) return 0;
 		break;
+	case Orders::Enum::AttackMove:
+		if (!unit->attack(position)) return 0;
+		break;
 	default:
 		return -1;
 	}
@@ -97,7 +100,7 @@
 	return 1;
 }
 
-/*(X)*/ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitOnUnit(Unit firstUnit, Unit secondUnit, Order command) {
 	switch (command) {
 	case Orders::Enum::Move:
 		if (!firstUnit->rightClick(secondUnit)) return 0;
@@ -111,14 +114,20 @@
 	case Orders::Enum::Repair:
 		if (!firstUnit->repair(secondUnit)) return 0;
 		break;
+	case Orders::Enum::HarvestGas:
+		if (!firstUnit->gather(secondUnit)) return 0;
+		break;
+	case Orders::Enum::MoveToMinerals:
+		if (!firstUnit->gather(secondUnit)) return 0;
+		break;
 	default:
-		return -1;
+		return 0;
 	}
 
 	return 1;
 }
 
-/*(X)*/ int OrderUnitCommand(Unit unit, Order command = Orders::Move) {
+/*(X)*/ int OrderUnitCommand(Unit unit, Order command) {
 	switch (command) {
 	case Orders::Enum::HoldPosition:
 		if (!unit->holdPosition()) return 0;
@@ -155,15 +164,15 @@
 }
 
 //TERRAIN
-/*(X)*/ std::pair<bool, TilePosition> RepeatSearch(TilePosition coord, bool vert, int i, UnitType building,	bool(*f)(TilePosition pos, UnitType building)) {
+/*(X)*/ std::pair<bool, TilePosition> RepeatSearch(TilePosition coord, bool vert, int i, UnitType building, int space, bool(*f)(TilePosition pos, UnitType building, int reqSpace)) {
 	for (int c = -i; c <= i; c++) {
 		if (vert == false) {
-			if (GoodBuildingSpot({coord.x+c, coord.y}, building)) {
+			if (f({coord.x+c, coord.y}, building, space)) {
 				return { true, { coord.x + c, coord.y } };
 			}
 		}
 		else {
-			if (GoodBuildingSpot({coord.x, coord.y+c}, building)) {
+			if (f({coord.x, coord.y+c}, building, space)) {
 				return { true, { coord.x, coord.y + c } };
 			}
 		}
@@ -171,12 +180,12 @@
 	return { false, {0,0} };
 }
 
-/*(X)*/ bool GoodBuildingSpot(TilePosition pos, UnitType building) {
+/*(X)*/ bool GoodBuildingSpot(TilePosition pos, UnitType building, int reqSpace) {
 	if (Broodwar->canBuildHere(pos, building)) {
-		TilePosition testPos1 = { pos.x - 1, pos.y - 1 };
-		TilePosition testPos2 = { pos.x + 1, pos.y - 1 };
-		TilePosition testPos3 = { pos.x - 1, pos.y + 1 };
-		TilePosition testPos4 = { pos.x + 1, pos.y + 1 };
+		TilePosition testPos1 = { pos.x - reqSpace, pos.y - reqSpace };
+		TilePosition testPos2 = { pos.x + reqSpace, pos.y - reqSpace };
+		TilePosition testPos3 = { pos.x - reqSpace, pos.y + reqSpace };
+		TilePosition testPos4 = { pos.x + reqSpace, pos.y + reqSpace };
 
 		if (Broodwar->canBuildHere(testPos1, building) && Broodwar->canBuildHere(testPos2, building) &&
 			Broodwar->canBuildHere(testPos3, building) && Broodwar->canBuildHere(testPos4, building)) {
@@ -186,20 +195,20 @@
 	return false;
 }
 
-/*(X)*/ TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin) {	//place building in open area
+/*(X)*/ TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin, int reqSpace) {	//place building in open area
 	int tileSearchArea = 48;
 	std::pair<bool, TilePosition> test;
 	for (int i = 2; i < tileSearchArea; i++) {
-		test = RepeatSearch({ origin.x - i, origin.y }, false, i, building, GoodBuildingSpot);	//left
+		test = RepeatSearch({ origin.x - i, origin.y }, false, i, building, reqSpace, GoodBuildingSpot);	//left
 		if (test.first == true) return test.second;
 
-		test = RepeatSearch({ origin.x + i, origin.y }, false, i, building, GoodBuildingSpot);	//right
+		test = RepeatSearch({ origin.x + i, origin.y }, false, i, building, reqSpace, GoodBuildingSpot);	//right
 		if (test.first == true) return test.second;
 
-		test = RepeatSearch({ origin.x, origin.y + i }, false, i, building, GoodBuildingSpot);	//up
+		test = RepeatSearch({ origin.x, origin.y + i }, false, i, building, reqSpace, GoodBuildingSpot);	//up
 		if (test.first == true) return test.second;
 
-		test = RepeatSearch({ origin.x, origin.y - i }, false, i, building, GoodBuildingSpot);	//down
+		test = RepeatSearch({ origin.x, origin.y - i }, false, i, building, reqSpace, GoodBuildingSpot);	//down
 		if (test.first == true) return test.second;
 	}
 	return {1,1};
@@ -233,6 +242,22 @@
 	return GasVector.at(0);
 }
 
+/*(X)*/ Unit FindClosestRefinery(Position origin) {
+	std::vector<Unit> RefVector;
+	for (auto unit : Broodwar->self()->getUnits())
+		if (unit->getType().getID() == UnitTypes::Enum::Terran_Refinery) {
+			RefVector.push_back(unit);
+		}
+
+	while (RefVector.size() > 1) {
+		if (CloserToOrig(origin, RefVector.at(0)->getPosition(), RefVector.at(1)->getPosition()))
+			RefVector.erase(RefVector.begin() + 1);
+		else RefVector.erase(RefVector.begin());
+	}
+
+	return RefVector.at(0);
+}
+
 /*(X)*/ bool CloserToOrig(Position origin, Position unitAPos, Position unitBPos) {
 	double distA = sqrt(pow((abs(unitAPos.x - origin.x)), 2) + pow((abs(unitAPos.y - origin.y)), 2));
 	double distB = sqrt(pow((abs(unitBPos.x - origin.x)), 2) + pow((abs(unitBPos.y - origin.y)), 2));
@@ -242,14 +267,41 @@
 }
 
 //MACRO
-/*(X)*/ int IdleWorkersWork(MyBot* bot) {
+/*(X)*/ int IdleUnits(MyBot* bot) {
 	for (auto unit : Broodwar->self()->getUnits()) {
-		if (unit->getType().isWorker() && unit->isIdle()) {
-			Unit mineral = FindClosestMineral(bot->BaseLocations.at(0)->getPosition());
-			OrderUnitOnUnit(unit, mineral);
+		if (unit->isIdle()) {
+			if (unit->getType().isWorker()) {	//worker
+				if (!IdleWorkersWork(bot, unit)) return 0;
+			}
+			else if (unit->getType() == UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode)	//tank
+				OrderUnitCommand(unit, Orders::Enum::Sieging);
+			else if (unit->getType() == UnitTypes::Enum::Terran_Machine_Shop)	//Machine Shop
+				unit->research(TechTypes::Enum::Tank_Siege_Mode);
+			//...
 		}
 	}
 	return 1;
+}
+
+/*(X)*/ int IdleWorkersWork(MyBot* bot, Unit unit) {
+	int miners = 0;
+	int gassers = 0;
+	for (auto unit : Broodwar->self()->getUnits()) {
+		if (unit->getType().getID() == UnitTypes::Enum::Terran_SCV) {
+			if (unit->isGatheringMinerals()) miners++;
+			else if (unit->isGatheringGas()) gassers++;
+		}
+	}
+
+	if (bot->currentSubTaskNr > 4 && gassers < 2) {
+		if(OrderUnitOnUnit(unit, FindClosestRefinery(unit->getPosition()), Orders::HarvestGas)) return 1;
+		
+	}
+	else {
+		if(OrderUnitOnUnit(unit, FindClosestMineral(unit->getPosition()), Orders::MoveToMinerals)) return 1;
+	}
+
+	return 0;
 }
 
 /*( )*/ int BaseBuilder() {
@@ -274,6 +326,18 @@
 }
 
 /*( )*/ int SquadOrder() {
+	return 1;
+}
+
+/*( )*/ int Attack(MyBot* bot) {
+	Position attackPos = bot->EnemyBase.at(0)->getPosition();
+	for (auto unit : Broodwar->self()->getUnits()) {
+		UnitType type = unit->getType();
+		if (type.getID() < 100 && type.getID() != UnitTypes::Enum::Terran_SCV) {
+			OrderUnitLocation(unit, attackPos, Orders::AttackMove);
+			//Broodwar->sendText("ATTACKING!");
+		}
+	}
 	return 1;
 }
 
