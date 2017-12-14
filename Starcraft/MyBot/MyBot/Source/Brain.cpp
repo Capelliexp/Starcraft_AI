@@ -273,8 +273,7 @@
 			if (unit->getType().isWorker()) {	//worker
 				if (!IdleWorkersWork(bot, unit)) return 0;
 			}
-			else if (unit->getType() == UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode)	//tank
-				OrderUnitCommand(unit, Orders::Enum::Sieging);
+			//else 
 			else if (unit->getType() == UnitTypes::Enum::Terran_Machine_Shop)	//Machine Shop
 				unit->research(TechTypes::Enum::Tank_Siege_Mode);
 			//...
@@ -317,6 +316,16 @@
 }
 
 //MICRO
+/*( )*/ int General(MyBot* bot) {
+	TankCommander();
+
+	if (bot->currentSubTaskNr > 12) {
+		Attack(bot);
+	}
+
+	return 1;
+}
+
 /*( )*/ int GroupUp() {
 	return 1;
 }
@@ -330,7 +339,7 @@
 }
 
 /*( )*/ int Attack(MyBot* bot) {
-	Position attackPos = bot->EnemyBase.at(0)->getPosition();
+	Position attackPos = bot->EnemyBases.at(0)->getPosition();
 	for (auto unit : Broodwar->self()->getUnits()) {
 		UnitType type = unit->getType();
 		if (type.getID() < 100 && type.getID() != UnitTypes::Enum::Terran_SCV) {
@@ -338,6 +347,42 @@
 			//Broodwar->sendText("ATTACKING!");
 		}
 	}
+	return 1;
+}
+
+/*(X)*/ int TankCommander() {
+	std::vector<BWAPI::Unit> tank_normal;
+	std::vector<BWAPI::Unit> tank_siege;
+
+	for (auto unit : Broodwar->self()->getUnits()) {	//get all tanks...
+		if (unit->getType() == UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode)	//...in normal mode
+			tank_normal.push_back(unit);
+		else if (unit->getType() == UnitTypes::Enum::Terran_Siege_Tank_Siege_Mode)	//...in siege mode
+			tank_siege.push_back(unit);
+	}
+
+	//---
+
+	for (int i = 0; i < tank_normal.size(); i++)
+		for (auto enemyUnit : Broodwar->enemy()->getUnits())
+			if (tank_normal.at(i)->isInWeaponRange(enemyUnit)) {
+				OrderUnitCommand(tank_normal.at(i), Orders::Enum::Sieging);
+				break;
+			}
+
+	for (int i = 0; i < tank_siege.size(); i++) {
+		bool chillOutMan = true;
+		for (auto enemyUnit : Broodwar->enemy()->getUnits())
+			if (tank_siege.at(i)->isSieged())
+				if (tank_siege.at(i)->isInWeaponRange(enemyUnit)) {
+					chillOutMan = false;
+					break;
+				}
+		if (chillOutMan == true)
+			if (tank_siege.at(i)->isIdle())
+				OrderUnitCommand(tank_siege.at(i), Orders::Enum::Unsieging);
+	}
+
 	return 1;
 }
 

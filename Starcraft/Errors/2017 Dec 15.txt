@@ -1,0 +1,37 @@
+
+//////////////////////////////////////////////////
+TIME: Fri Dec 15 00:01:35 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Incompatible_State
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FAA0
+  ESI: 72925734
+  EBX: 00000001
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F8
+  EBP: 0019FA50
+  EIP: 77C7CBB2
+  ESP: 0019F9F8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F29A465    TankCommander
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:369
+  MyBot.dll         0x0F29C3E0    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:175
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

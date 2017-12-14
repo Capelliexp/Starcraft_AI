@@ -35,10 +35,12 @@ int ArmyCreator();
 int Scout();
 
 //MICRO
+int General(MyBot* bot);
 int GroupUp();
 int CreateSquad();
 int SquadOrder();
 int Attack(MyBot* bot);
+int TankCommander();
 
 //GLOBAL
 int CountUnitType(UnitType building);

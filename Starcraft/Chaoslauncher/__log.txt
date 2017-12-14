@@ -346,3 +346,7 @@
 [2017-12-11 14:55:07] Injected into process "Chaoslauncher.exe"
 [2017-12-11 14:55:07] ICC module loaded
 [2017-12-11 16:46:07] ICC module unloaded
+[2017-12-14 22:37:18] ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[2017-12-14 22:37:18] Injected into process "Chaoslauncher.exe"
+[2017-12-14 22:37:18] ICC module loaded
+[2017-12-15 00:12:22] ICC module unloaded

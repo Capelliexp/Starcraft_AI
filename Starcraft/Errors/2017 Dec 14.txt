@@ -1,0 +1,148 @@
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 14 23:33:52 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Incompatible_State
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA94
+  ESI: 72925734
+  EBX: 00000001
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9E8
+  EBP: 0019FA44
+  EIP: 77C7CBB2
+  ESP: 0019F9E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FE0A481    TankCommander
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:368
+  MyBot.dll         0x0FE0C3F0    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:172
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 14 23:42:32 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Incompatible_State
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 72925734
+  EBX: 00000001
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 77C7CBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F63A491    TankCommander
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:369
+  MyBot.dll         0x0F63C400    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:174
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 14 23:44:57 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Unit_Busy
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 72925734
+  EBX: 00000002
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 77C7CBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FDEA47D    TankCommander
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:369
+  MyBot.dll         0x0FDEC3E0    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:174
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 14 23:57:48 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Unit_Busy
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019FA9C
+  ESI: 72925734
+  EBX: 00000002
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F9F0
+  EBP: 0019FA4C
+  EIP: 77C7CBB2
+  ESP: 0019F9F0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FB7A479    TankCommander
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:369
+  MyBot.dll         0x0FB7C3F0    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:175
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

@@ -21,6 +21,12 @@ typedef struct {
 	short requiredUnits, completedUnits, inProgressUnits;
 } subTask;
 
+typedef struct {
+	std::vector<BWAPI::Unit> members;
+	BWAPI::Order command;
+	BWAPI::Position position;
+} Squad;
+
 class MyBot : public BWAPI::AIModule
 {
 public:
@@ -43,14 +49,14 @@ public:
 	virtual void onSaveGame(std::string gameName);
 	virtual void onUnitComplete(BWAPI::Unit unit);
 
-	//Own methods
 	void drawStats();
 	void drawTerrainData();
 	void showPlayers();
 	void showForces();
 	Position findGuardPoint();
 
-	//My stuff
+	//--------------------------------------------
+	//My superior intellect applied to a state of the art artificial intelligence:
 	short frameCount10;
 	short frameCount100;
 	short frameCount1000;
@@ -61,8 +67,11 @@ public:
 	int currentSubTaskNr;
 
 	std::vector<BWTA::BaseLocation*> BaseLocations;
-	std::vector<BWTA::BaseLocation*> EnemyBase;
+	std::vector<BWTA::BaseLocation*> EnemyBases;
+	std::vector<Squad> Squads;
+	Squad* recruitmentSquad;
 
 	Position armyGroupPoint;
 
+	
 };
