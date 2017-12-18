@@ -200,7 +200,11 @@
 /*(X)*/ TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin, int reqSpace) {	//place building in open area
 	int tileSearchArea = 48;
 	std::pair<bool, TilePosition> test;
-	for (int i = 2; i < tileSearchArea; i++) {
+
+	test = RepeatSearch({ origin.x, origin.y }, false, 0, building, reqSpace, GoodBuildingSpot);	//center
+	if (test.first == true) return test.second;
+
+	for (int i = 1; i < tileSearchArea; i++) {	//recursivly search around the center
 		test = RepeatSearch({ origin.x - i, origin.y }, false, i, building, reqSpace, GoodBuildingSpot);	//left
 		if (test.first == true) return test.second;
 
@@ -268,6 +272,13 @@
 	return false;
 }
 
+/*(X)*/ float DistanceBetween(Position posA, Position posB) {
+	float x = abs(posA.x - posB.x);
+	float y = abs(posA.y - posB.y);
+
+	return sqrt((x*x) + (y*y)); 
+}
+
 //MACRO
 /*(X)*/ int IdleUnits(MyBot* bot) {
 	for (auto unit : Broodwar->self()->getUnits()) {
@@ -322,23 +333,35 @@
 	UpdateBaseInfo(bot);
 
 	if (bot->currentSubTaskNr > 11) {
-		Attack(bot);
+		AllSquadsExecute(bot);
 	}
 
 	return 1;
 }
 
-/*( )*/ int GroupUp(int SquadIterator1, int SquadIterator2) {
-
+/*(X)*/ int GroupUp(MyBot* bot, int SquadIterator1, int SquadIterator2) {
+	int loops = bot->Squads.at(SquadIterator1)->members.size();
+	for (int i = 0; i < loops; i++) {
+		bot->Squads.at(SquadIterator2)->members.push_back(bot->Squads.at(SquadIterator2)->members.back());
+		bot->Squads.at(SquadIterator2)->members.pop_back();
+	}
 	return 1;
 }
 
-/*( )*/ int SquadOrder() {
+/*(X)*/ int ChangeSquadOrder(MyBot* bot, int squadIterator, BWAPI::Order command, BWAPI::Position position) {
+	bot->Squads.at(squadIterator)->position = position;
+	bot->Squads.at(squadIterator)->command = command;
 	return 1;
 }
 
-/*( )*/ int Attack(MyBot* bot) {
-	Position attackPos = bot->EnemyBases.at(0)->getPosition();
+/*(X)*/ int ChangeSquadOrder(Squad* squadPointer, BWAPI::Order command, BWAPI::Position position) {
+	squadPointer->position = position;
+	squadPointer->command = command;
+	return 1;
+}
+
+/*(X)*/ int AllSquadsExecute(MyBot* bot) {
+	//Position attackPos = bot->EnemyBases.at(0)->getPosition();
 	//for (auto unit : Broodwar->self()->getUnits()) {
 	//	UnitType type = unit->getType();
 	//	if (type.getID() < 100 && type.getID() != UnitTypes::Enum::Terran_SCV) {
@@ -349,7 +372,38 @@
 
 	for (int i = 0; i < bot->Squads.size(); i++) {
 		for (int j = 0; j < bot->Squads.at(i)->members.size(); j++) {
-			OrderUnitLocation(bot->Squads.at(i)->members.at(j), attackPos, Orders::AttackMove);
+			try {
+				OrderUnitLocation(bot->Squads.at(i)->members.at(j), bot->Squads.at(i)->position, bot->Squads.at(i)->command);
+			}
+			catch (int err) {
+				return 0;
+			}
+			
+		}
+	}
+	return 1;
+}
+
+/*(X)*/ int SingleSquadExecute(MyBot* bot, int squadIterator) {
+	for (int i = 0; i < bot->Squads.at(squadIterator)->members.size(); i++) {
+		try {
+			OrderUnitLocation(bot->Squads.at(squadIterator)->members.at(i), bot->Squads.at(squadIterator)->position, bot->Squads.at(squadIterator)->command);
+		}
+		catch (int err) {
+			return 0;
+		}
+	}
+	
+	return 1;
+}
+
+/*(X)*/ int SingleSquadExecute(MyBot* bot, Squad* squadPointer) {
+	for (int i = 0; i < squadPointer->members.size(); i++) {
+		try {
+			OrderUnitLocation(squadPointer->members.at(i), squadPointer->position, squadPointer->command);
+		}
+		catch (int err) {
+			return 0;
 		}
 	}
 	return 1;
@@ -376,14 +430,14 @@
 			}
 
 	for (int i = 0; i < tank_siege.size(); i++) {
-		bool chillOutMan = true;
+		bool timeToChill = true;
 		for (auto enemyUnit : Broodwar->enemy()->getUnits())
 			if (tank_siege.at(i)->isSieged())
 				if (tank_siege.at(i)->isInWeaponRange(enemyUnit)) {
-					chillOutMan = false;
+					timeToChill = false;
 					break;
 				}
-		if (chillOutMan == true)
+		if (timeToChill == true)
 			if (tank_siege.at(i)->isIdle())
 				OrderUnitCommand(tank_siege.at(i), Orders::Enum::Unsieging);
 	}
@@ -391,9 +445,44 @@
 	return 1;
 }
 
-/*( )*/ int UpdateBaseInfo(MyBot* bot) {
+/*(?)*/ int UpdateBaseInfo(MyBot* bot) {
+	float searchDist = 500;
+
+	//try {
+	int unit = 0;
+		for (int squad = 0; squad < bot->Squads.size(); squad++) {
+			for (int squadMember = 0; squadMember < bot->Squads.at(squad)->members.size(); squadMember++) {
+				unit++;
+				//Broodwar->sendText("CHECKING UNIT %d TO BASE DIST", unit);
+				for (int base = 0; base < bot->PotentialEnemyBases.size(); base++) {	//ALLA BASER ÄR SAMMA!!!!
+					//Broodwar->sendText("CHECKING BASE %d", base);
+					float dist = DistanceBetween(bot->PotentialEnemyBases.at(base)->getPosition(), bot->Squads.at(squad)->members.at(squadMember)->getPosition());
+					Broodwar->sendText("DIST TO BASE %d: %f", base, dist);
+					if (dist < searchDist) {
+						Broodwar->sendText("UNIT IN BASE");
+						if (!(UnitSeesEnemy(bot->Squads.at(squad)->members.at(squadMember)))) {
+							Broodwar->sendText("CLEARING BASE");
+							bot->PotentialEnemyBases.erase(bot->PotentialEnemyBases.begin() + base);
+							//base--;
+						}
+					}
+				}
+			}
+		}
+	//}
+	//catch (int err) {
+	//	return 0;
+	//}
 
 	return 1;
+}
+
+/*(X)*/ bool UnitSeesEnemy(BWAPI::Unit unit) {
+	for (auto enemyUnit : Broodwar->enemy()->getUnits())
+		if (unit->isInWeaponRange(enemyUnit))
+			return true;
+
+	return false;
 }
 
 //GLOBAL

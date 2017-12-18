@@ -68,7 +68,7 @@ public:
 
 	std::vector<BWTA::BaseLocation*> CloseBaseLocations;
 	std::vector<BWTA::BaseLocation*> EnemyBases;
-	std::vector<BWTA::BaseLocation*> PotentialEnemyBases;
+	std::vector<BWTA::BaseLocation*> PotentialEnemyBases;	//ALLA BASER ÄR SAMMA!!!!
 	std::vector<Squad*> Squads;
 	Squad* recruitmentSquad;
 

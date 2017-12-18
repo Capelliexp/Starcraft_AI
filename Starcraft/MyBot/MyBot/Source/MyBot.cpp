@@ -101,6 +101,12 @@ void MyBot::onFrame() {
 		std::to_string(currentSubTask.inProgressUnits);
 	DrawTextOnScreen(a, 10, 10);
 
+	std::string b = "          Close bases: " + std::to_string(CloseBaseLocations.size()) + 
+		          "\n         Enemy Bases: " + std::to_string(EnemyBases.size()) + 
+		          "\nPotential Enemy Bases: " + std::to_string(PotentialEnemyBases.size()) + 
+		          "\n\n               Squads: " + std::to_string(Squads.size());
+	DrawTextOnScreen(b, 480, 20);
+
 	//Follow task
 	if (frameCount100 == 100 && currentSubTaskNr < 13) {
 		if ((currentSubTask.completedUnits + currentSubTask.inProgressUnits) < currentSubTask.requiredUnits) {

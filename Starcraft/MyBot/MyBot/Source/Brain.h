@@ -26,6 +26,7 @@ TilePosition FindSuitableBuildingTile(UnitType building, TilePosition origin, in
 Unit FindClosestMineral(Position origin);
 Unit FindClosestGas(Position origin);
 bool CloserToOrig(Position origin, Position unitA, Position unitB);
+float DistanceBetween(Position posA, Position posB);
 
 //MACRO
 int IdleUnits(MyBot* bot);
@@ -36,11 +37,15 @@ int Scout();
 
 //MICRO
 int General(MyBot* bot);
-int GroupUp(int SquadIterator1, int SquadIterator2);
-int SquadOrder();
-int Attack(MyBot* bot);
+int GroupUp(MyBot* bot, int SquadIterator1, int SquadIterator2);
+int ChangeSquadOrder(MyBot* bot, int squadIterator, BWAPI::Order command, BWAPI::Position position);
+int ChangeSquadOrder(Squad* squadPointer, BWAPI::Order command, BWAPI::Position position);
+int AllSquadsExecute(MyBot* bot);
+int SingleSquadExecute(MyBot* bot, int squadIterator);
+int SingleSquadExecute(MyBot* bot, Squad* squadPointer);
 int TankCommander();
 int UpdateBaseInfo(MyBot* bot);
+bool UnitSeesEnemy(BWAPI::Unit unit);
 
 //GLOBAL
 int CountUnitType(UnitType building);
