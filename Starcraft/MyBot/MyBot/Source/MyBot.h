@@ -21,11 +21,11 @@ typedef struct {
 	short requiredUnits, completedUnits, inProgressUnits;
 } subTask;
 
-typedef struct {
+typedef struct Squad {
 	std::vector<BWAPI::Unit> members;
 	BWAPI::Order command;
 	BWAPI::Position position;
-} Squad;
+};
 
 class MyBot : public BWAPI::AIModule
 {
@@ -66,9 +66,10 @@ public:
 	subTask currentSubTask;
 	int currentSubTaskNr;
 
-	std::vector<BWTA::BaseLocation*> BaseLocations;
+	std::vector<BWTA::BaseLocation*> CloseBaseLocations;
 	std::vector<BWTA::BaseLocation*> EnemyBases;
-	std::vector<Squad> Squads;
+	std::vector<BWTA::BaseLocation*> PotentialEnemyBases;
+	std::vector<Squad*> Squads;
 	Squad* recruitmentSquad;
 
 	Position armyGroupPoint;

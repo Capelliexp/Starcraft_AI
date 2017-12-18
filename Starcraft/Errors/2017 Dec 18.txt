@@ -1,0 +1,68 @@
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 18 00:28:35 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Already_Researched
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0F3FA13F    MyBot.dll
+REGISTERS:
+  EDI: 0019FCD4
+  ESI: 7333ED54
+  EBX: 00B14B78
+  EDX: 049F58B8
+  ECX: 00000000
+  EAX: 00000001
+  EBP: 0019FB04
+  EIP: 0F3FA13F
+  ESP: 0019FAEC
+STACK:
+  MyBot.dll         0x0F3FA13F    Attack
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:341
+  MyBot.dll         0x0F3FC4AB    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:177
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Mon Dec 18 00:32:40 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: Already_Researched
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xC0000005    EXCEPTION_ACCESS_VIOLATION
+FAULT:     0x0F6BA13F    MyBot.dll
+REGISTERS:
+  EDI: 0019FCD4
+  ESI: 7333ED54
+  EBX: 009F4B18
+  EDX: 04A8D7D0
+  ECX: 00000000
+  EAX: 00000001
+  EBP: 0019FB04
+  EIP: 0F6BA13F
+  ESP: 0019FAEC
+STACK:
+  MyBot.dll         0x0F6BA13F    Attack
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:341
+  MyBot.dll         0x0F6BC4AB    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:177
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

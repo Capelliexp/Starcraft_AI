@@ -6,7 +6,9 @@
 	Broodwar->drawBoxMap({ position.x - HBS, position.y - HBS }, { position.x + HBS, position.y + HBS }, 111, true);
 }
 
-/*( )*/ void DrawTextOnObject(Unit object, std::string text, int offset) {}
+/*( )*/ void DrawTextOnObject(Unit object, std::string text, int offset) {
+
+}
 
 /*(X)*/ void DrawTextOnScreen(std::string text, int x, int y) {
 	const char* charText = text.c_str();
@@ -273,7 +275,6 @@
 			if (unit->getType().isWorker()) {	//worker
 				if (!IdleWorkersWork(bot, unit)) return 0;
 			}
-			//else 
 			else if (unit->getType() == UnitTypes::Enum::Terran_Machine_Shop)	//Machine Shop
 				unit->research(TechTypes::Enum::Tank_Siege_Mode);
 			//...
@@ -318,19 +319,17 @@
 //MICRO
 /*( )*/ int General(MyBot* bot) {
 	TankCommander();
+	UpdateBaseInfo(bot);
 
-	if (bot->currentSubTaskNr > 12) {
+	if (bot->currentSubTaskNr > 11) {
 		Attack(bot);
 	}
 
 	return 1;
 }
 
-/*( )*/ int GroupUp() {
-	return 1;
-}
+/*( )*/ int GroupUp(int SquadIterator1, int SquadIterator2) {
 
-/*( )*/ int CreateSquad() {
 	return 1;
 }
 
@@ -340,11 +339,17 @@
 
 /*( )*/ int Attack(MyBot* bot) {
 	Position attackPos = bot->EnemyBases.at(0)->getPosition();
-	for (auto unit : Broodwar->self()->getUnits()) {
-		UnitType type = unit->getType();
-		if (type.getID() < 100 && type.getID() != UnitTypes::Enum::Terran_SCV) {
-			OrderUnitLocation(unit, attackPos, Orders::AttackMove);
-			//Broodwar->sendText("ATTACKING!");
+	//for (auto unit : Broodwar->self()->getUnits()) {
+	//	UnitType type = unit->getType();
+	//	if (type.getID() < 100 && type.getID() != UnitTypes::Enum::Terran_SCV) {
+	//		OrderUnitLocation(unit, attackPos, Orders::AttackMove);
+	//		//Broodwar->sendText("ATTACKING!");
+	//	}
+	//}
+
+	for (int i = 0; i < bot->Squads.size(); i++) {
+		for (int j = 0; j < bot->Squads.at(i)->members.size(); j++) {
+			OrderUnitLocation(bot->Squads.at(i)->members.at(j), attackPos, Orders::AttackMove);
 		}
 	}
 	return 1;
@@ -382,6 +387,11 @@
 			if (tank_siege.at(i)->isIdle())
 				OrderUnitCommand(tank_siege.at(i), Orders::Enum::Unsieging);
 	}
+
+	return 1;
+}
+
+/*( )*/ int UpdateBaseInfo(MyBot* bot) {
 
 	return 1;
 }

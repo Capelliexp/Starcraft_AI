@@ -54,7 +54,7 @@ void MyBot::onStart(){
 	AnalyzeThread();
 
 	for (auto a : home->getBaseLocations()) {	//my base
-		this->BaseLocations.push_back(a);
+		this->CloseBaseLocations.push_back(a);
 	}
 
 	std::set< BaseLocation *> AllBases = BWTA::getBaseLocations();
@@ -64,15 +64,16 @@ void MyBot::onStart(){
 
 	for (unsigned int i = 1; i < AllBases.size(); i++) {
 		BaseLocation* contender = *AllBases.begin();
-		if (CloserToOrig(BaseLocations.at(0)->getPosition(), contender->getPosition(), highest->getPosition()))
+		PotentialEnemyBases.push_back(contender);
+		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), contender->getPosition(), highest->getPosition()))
 			highest = contender;
-		if (CloserToOrig(BaseLocations.at(0)->getPosition(), lowest->getPosition(), contender->getPosition()))
+		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), lowest->getPosition(), contender->getPosition()))
 			lowest = contender;
 		AllBases.erase(0);
 	}
-	BaseLocations.push_back(highest);
+	CloseBaseLocations.push_back(highest);
 	EnemyBases.push_back(lowest);
-
+	
 	for (auto choke : home->getChokepoints()) {
 		armyGroupPoint = choke->getCenter();
 	}
@@ -105,7 +106,7 @@ void MyBot::onFrame() {
 		if ((currentSubTask.completedUnits + currentSubTask.inProgressUnits) < currentSubTask.requiredUnits) {
 			if (currentSubTask.construct > 100 /* == UnitTypes::Buildings*/) {
 				if (currentSubTask.construct == UnitTypes::Enum::Terran_Refinery) {
-					if (BuildRefinery(FindClosestGas(BaseLocations.at(currentSubTask.base)->getPosition()))) {
+					if (BuildRefinery(FindClosestGas(CloseBaseLocations.at(currentSubTask.base)->getPosition()))) {
 						currentSubTask.inProgressUnits++;
 						//Broodwar->sendText("Building refinery");
 					}
@@ -127,7 +128,7 @@ void MyBot::onFrame() {
 						}
 					}
 				}
-				else if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(currentSubTask.construct, BaseLocations.at(currentSubTask.base)->getTilePosition(), 2))){
+				else if (BuildBuildingLocation(currentSubTask.construct, FindSuitableBuildingTile(currentSubTask.construct, CloseBaseLocations.at(currentSubTask.base)->getTilePosition(), 2))){
 					currentSubTask.inProgressUnits++;
 					//Broodwar->sendText("Building building");
 				}
@@ -294,12 +295,22 @@ void MyBot::onUnitCreate(BWAPI::Unit unit)
 }
 
 //Called when a unit has been destroyed.
-void MyBot::onUnitDestroy(BWAPI::Unit unit)
-{
-	/*if (unit->getPlayer() == Broodwar->self())
-		Broodwar->sendText("My unit %s [%x] has been destroyed at (%d,%d)", unit->getType().getName().c_str(), unit, unit->getPosition().x, unit->getPosition().y);
-	else
-		Broodwar->sendText("Enemy unit %s [%x] has been destroyed at (%d,%d)", unit->getType().getName().c_str(), unit, unit->getPosition().x, unit->getPosition().y);*/
+void MyBot::onUnitDestroy(BWAPI::Unit unit){
+	if (unit->getPlayer() == Broodwar->self()) {
+		//Broodwar->sendText("My unit %s [%x] has been destroyed at (%d,%d)", unit->getType().getName().c_str(), unit, unit->getPosition().x, unit->getPosition().y);
+		for (int i = 0; i < Squads.size(); i++) {
+			for (int j = 0; j < Squads.at(i)->members.size(); j++) {
+				if (Squads.at(i)->members.at(j) == unit) {
+					Squads.at(i)->members.erase(Squads.at(i)->members.begin() + j);
+					goto end;
+				}
+			}
+		}
+	end:;
+	}
+	else {
+		//Broodwar->sendText("Enemy unit %s [%x] has been destroyed at (%d,%d)", unit->getType().getName().c_str(), unit, unit->getPosition().x, unit->getPosition().y);
+	}
 }
 
 //Only needed for Zerg units.
@@ -443,18 +454,33 @@ void MyBot::showForces()
 }
 
 //Called when a unit has been completed, i.e. finished built.
-void MyBot::onUnitComplete(BWAPI::Unit unit)
-{
-	//Broodwar->sendText("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x,unit->getPosition().y);
-	if (unit->getType() == currentSubTask.construct) {
-		currentSubTask.completedUnits++;
-		currentSubTask.inProgressUnits--;
-	}
-	if (unit->getType().getID() != (int)UnitTypes::Enum::Terran_SCV) {
-		//Broodwar->sendText("unit created with id %d", unit->getType().getID());
-		OrderUnitLocation(unit, armyGroupPoint);
-	}
-	else {
-		IdleWorkersWork(this, unit);
+void MyBot::onUnitComplete(BWAPI::Unit unit){
+	if (unit->getPlayer() == Broodwar->self()) {
+		//Broodwar->sendText("A %s [%x] has been completed at (%d,%d)",unit->getType().getName().c_str(),unit,unit->getPosition().x,unit->getPosition().y);
+		if (unit->getType() == currentSubTask.construct) {
+			currentSubTask.completedUnits++;
+			currentSubTask.inProgressUnits--;
+		}
+		if (unit->getType().getID() != (int)UnitTypes::Enum::Terran_SCV) {
+			//Broodwar->sendText("unit created with id %d", unit->getType().getID());
+			if (unit->getType().getID() < 100) {
+				if (recruitmentSquad != nullptr) {
+					recruitmentSquad->members.push_back(unit);
+					Broodwar->sendText("A unit was added to the recruitment squad, new size: %d", recruitmentSquad->members.size());
+
+				}
+				else {
+					Squad* temp = new Squad();
+					temp->members.push_back(unit);
+					Squads.push_back(temp);
+					recruitmentSquad = Squads.at(Squads.size() - 1);	//kanske fel
+					Broodwar->sendText("New recruitment squad created");
+				}
+				OrderUnitLocation(unit, armyGroupPoint);
+			}
+		}
+		else {
+			IdleWorkersWork(this, unit);
+		}
 	}
 }

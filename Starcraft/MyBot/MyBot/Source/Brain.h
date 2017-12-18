@@ -36,11 +36,11 @@ int Scout();
 
 //MICRO
 int General(MyBot* bot);
-int GroupUp();
-int CreateSquad();
+int GroupUp(int SquadIterator1, int SquadIterator2);
 int SquadOrder();
 int Attack(MyBot* bot);
 int TankCommander();
+int UpdateBaseInfo(MyBot* bot);
 
 //GLOBAL
 int CountUnitType(UnitType building);
