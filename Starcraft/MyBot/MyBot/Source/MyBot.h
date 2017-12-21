@@ -15,13 +15,13 @@ DWORD WINAPI AnalyzeThread();
 using namespace BWAPI;
 using namespace BWTA;
 
-typedef struct {
+struct subTask {
 	short task, step, base;
 	UnitType construct;
 	short requiredUnits, completedUnits, inProgressUnits;
-} subTask;
+};
 
-typedef struct Squad {
+struct Squad {
 	std::vector<BWAPI::Unit> members;
 	BWAPI::Order command;
 	BWAPI::Position position;
@@ -68,7 +68,9 @@ public:
 
 	std::vector<BWTA::BaseLocation*> CloseBaseLocations;
 	std::vector<BWTA::BaseLocation*> EnemyBases;
-	std::vector<BWTA::BaseLocation*> PotentialEnemyBases;	//ALLA BASER ÄR SAMMA!!!!
+	std::vector<Position> PotentialEnemyBasePositions;
+	std::vector<Position> AllBasePositions;
+
 	std::vector<Squad*> Squads;
 	Squad* recruitmentSquad;
 

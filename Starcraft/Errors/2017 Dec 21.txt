@@ -1,0 +1,712 @@
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 15:45:21 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B62BE0
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F8FA1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F8FD2E2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 15:51:10 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B78740
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F75A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F75D342    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 15:57:11 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04BAA610
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F39A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F39D352    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 15:57:54 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04BD1FB8
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F70A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F70D352    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:00:36 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B535E0
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F6EA1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F6ED2F2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:02:29 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B55E40
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F94A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F94D1A2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:09:37 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B69200
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F89A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F89D1E2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:11:09 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04BF6FB0
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F10A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F10D1A2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:13:47 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04C81E70
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F9FA1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F9FD2F2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:18:48 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B886B0
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F47A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F47D312    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 16:19:43 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B53F70
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F35A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F35D272    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:23:32 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B56DD8
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F49A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F49D312    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:26:16 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B83B20
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F17A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F17D2F2    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:31:28 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F994
+  ESI: 72925734
+  EBX: 04B98498
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8E8
+  EBP: 0019F944
+  EIP: 77C7CBB2
+  ESP: 0019F8E8
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F95A1D0    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:351
+  MyBot.dll         0x0F95D352    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:198
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:35:52 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F97C
+  ESI: 72925734
+  EBX: 04C26978
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8D0
+  EBP: 0019F92C
+  EIP: 77C7CBB2
+  ESP: 0019F8D0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FAAA250    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:356
+  MyBot.dll         0x0FAAA166    General
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:341
+  MyBot.dll         0x0FAAD586    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:200
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:40:10 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F97C
+  ESI: 72925734
+  EBX: 04B78330
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8D0
+  EBP: 0019F92C
+  EIP: 77C7CBB2
+  ESP: 0019F8D0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F0BA250    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:356
+  MyBot.dll         0x0F0BA1AB    General
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:344
+  MyBot.dll         0x0F0BD5B6    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:200
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:41:40 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F97C
+  ESI: 72925734
+  EBX: 04C47310
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8D0
+  EBP: 0019F92C
+  EIP: 77C7CBB2
+  ESP: 0019F8D0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x086DA250    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:356
+  MyBot.dll         0x086DA1AB    General
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:344
+  MyBot.dll         0x086DD5B6    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:200
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 17:45:00 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F97C
+  ESI: 72925734
+  EBX: 04B54180
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8D0
+  EBP: 0019F92C
+  EIP: 77C7CBB2
+  ESP: 0019F8D0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0F98A250    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:354
+  MyBot.dll         0x0F98A1AB    General
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:344
+  MyBot.dll         0x0F98D596    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:200
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----
+
+//////////////////////////////////////////////////
+TIME: Thu Dec 21 18:01:05 2017
+
+VERSION: 1.16.1.1
+BWAPI:
+  REVISION: 0
+  BUILD: RELEASE
+  ERROR: None
+  LOCATION: Single Player 
+MAP: Fading Realm
+     (2)Fading Realm.scx
+
+EXCEPTION: 0xE06D7363    UNKNOWN
+FAULT:     0x77C7CBB2    KERNELBASE.dll
+REGISTERS:
+  EDI: 0019F97C
+  ESI: 72925734
+  EBX: 04C68A78
+  EDX: 00000000
+  ECX: 00000003
+  EAX: 0019F8D0
+  EBP: 0019F92C
+  EIP: 77C7CBB2
+  ESP: 0019F8D0
+STACK:
+  KERNELBASE.dll    0x77C7CBB2    RaiseException
+  MSVCR120.dll      0x73348A49    _CxxThrowException
+  MSVCP120.dll      0x728F3A3A    ?_Xout_of_range@std@@YAXPBD@Z
+  MyBot.dll         0x0FB5A290    CheckAllSquadOrders
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:354
+  MyBot.dll         0x0FB5A1EB    General
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\brain.cpp:344
+  MyBot.dll         0x0FB5D886    MyBot::onFrame
+                                     d:\git repos\starcraft_ai\starcraft\mybot\mybot\source\mybot.cpp:200
+  BWAPI.dll         0x1003496A      ----
+  BWAPI.dll         0x1002BDA0      ----
+  BWAPI.dll         0x10041BC9      ----
+  BWAPI.dll         0x1004C7D5      ----

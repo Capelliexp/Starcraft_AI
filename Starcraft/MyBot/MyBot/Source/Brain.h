@@ -3,6 +3,7 @@
 
 //HELPER
 void DrawBox(Position position, int size, int color = 111);
+void DrawBox(int x, int y, int size, int color = 111);
 void DrawTextOnObject(Unit object, std::string text, int offset);
 void DrawTextOnScreen(std::string text, int x, int y);
 
@@ -37,6 +38,8 @@ int Scout();
 
 //MICRO
 int General(MyBot* bot);
+int CheckAllSquadOrders(MyBot* bot);
+int SquadGetNewOrder(MyBot* bot, Squad* a);
 int GroupUp(MyBot* bot, int SquadIterator1, int SquadIterator2);
 int ChangeSquadOrder(MyBot* bot, int squadIterator, BWAPI::Order command, BWAPI::Position position);
 int ChangeSquadOrder(Squad* squadPointer, BWAPI::Order command, BWAPI::Position position);
@@ -45,6 +48,8 @@ int SingleSquadExecute(MyBot* bot, int squadIterator);
 int SingleSquadExecute(MyBot* bot, Squad* squadPointer);
 int TankCommander();
 int UpdateBaseInfo(MyBot* bot);
+int RefillEnemyPositions(MyBot* bot);
+int RemoveObjectiveFromAllSquads(MyBot* bot, Position posNoLongerThreat);
 bool UnitSeesEnemy(BWAPI::Unit unit);
 
 //GLOBAL

@@ -31,7 +31,7 @@ void MyBot::onStart(){
 	task[7] =  { 3, 1, 0, UnitTypes::Enum::Terran_Factory, 1, 0, 0 };
 	task[8] =  { 3, 2, 0, UnitTypes::Enum::Terran_Machine_Shop, 1, 0, 0 };
 	task[9] =  { 3, 3, 0, UnitTypes::Enum::Terran_Supply_Depot, 2, 0, 0 };
-	task[10] =  { 3, 4, 0, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 0, 0 };
+	task[10] = { 3, 4, 0, UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode, 3, 0, 0 };
 	task[11] = { 4, 1, 1, UnitTypes::Enum::Terran_Command_Center, 1, 0, 0 };
 	task[12] = { 4, 2, 1, UnitTypes::Enum::Terran_SCV, 4, 0, 0 };
 	task[13] = { 0, 0, 0, UnitTypes::Enum::None, 0, 0, 0 };
@@ -57,22 +57,28 @@ void MyBot::onStart(){
 		this->CloseBaseLocations.push_back(a);
 	}
 
-	std::set< BaseLocation *> AllBases = BWTA::getBaseLocations();
-	BaseLocation* highest = *AllBases.begin();
-	BaseLocation* lowest = *AllBases.begin();
-	AllBases.erase(0);
+	std::set<BaseLocation*> AllBases = BWTA::getBaseLocations();
+	for (auto baseLoc : BWTA::getBaseLocations()) {
+		if (baseLoc->getPosition() != CloseBaseLocations.at(0)->getPosition()) {
+			PotentialEnemyBasePositions.push_back(baseLoc->getPosition());
+			AllBasePositions.push_back(baseLoc->getPosition());
+		}
+	}
+
+	BaseLocation* closest = *AllBases.begin();
+	BaseLocation* farthest = *AllBases.begin();
 
 	for (unsigned int i = 1; i < AllBases.size(); i++) {
 		BaseLocation* contender = *AllBases.begin();
-		PotentialEnemyBases.push_back(contender);
-		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), contender->getPosition(), highest->getPosition()))
-			highest = contender;
-		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), lowest->getPosition(), contender->getPosition()))
-			lowest = contender;
+		
+		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), contender->getPosition(), farthest->getPosition()))
+			farthest = contender;
+		if (CloserToOrig(CloseBaseLocations.at(0)->getPosition(), closest->getPosition(), contender->getPosition()))
+			closest = contender;
 		AllBases.erase(0);
 	}
-	CloseBaseLocations.push_back(highest);
-	EnemyBases.push_back(lowest);
+	CloseBaseLocations.push_back(closest);
+	EnemyBases.push_back(farthest);
 	
 	for (auto choke : home->getChokepoints()) {
 		armyGroupPoint = choke->getCenter();
@@ -92,10 +98,20 @@ void MyBot::onFrame() {
 	//Draw box on all friendly units
 	//for (auto unit : Broodwar->self()->getUnits()) DrawBox(unit->getPosition(), 5);
 	//for(auto base : BWTA::getBaseLocations()) DrawBox(base->getPosition(), 10, 222);
+	/*for (int i = 0; i < CloseBaseLocations.size(); i++) {
+		DrawBox(CloseBaseLocations.at(i)->getPosition(), 10, 222);
+		Broodwar->sendText("%d", i);
+	}*/
+	/*if (frameCount100 == 100) {
+		for (int i = 0; i < Squads.size(); i++) {
+			Broodwar->sendText("Order: %d", Squads.at(i)->command);
+			Broodwar->sendText("Pos: (%d, %d)", Squads.at(i)->position.x, Squads.at(i)->position.y);
+		}
+	}*/
 
 	//Print task
 	std::string a = 
-		"Current Task:\n   task " + std::to_string(currentSubTask.task) + "." + std::to_string(currentSubTask.step) +
+		"Current Task:\n   task " + std::to_string(currentSubTaskNr) + " - " + std::to_string(currentSubTask.task) + "." + std::to_string(currentSubTask.step) +
 		"\n   constructing " + currentSubTask.construct.getName() + " at base " + std::to_string(currentSubTask.base) + "\n   " +
 		std::to_string(currentSubTask.requiredUnits) + ", " + std::to_string(currentSubTask.completedUnits) + ", " +
 		std::to_string(currentSubTask.inProgressUnits);
@@ -103,8 +119,8 @@ void MyBot::onFrame() {
 
 	std::string b = "          Close bases: " + std::to_string(CloseBaseLocations.size()) + 
 		          "\n         Enemy Bases: " + std::to_string(EnemyBases.size()) + 
-		          "\nPotential Enemy Bases: " + std::to_string(PotentialEnemyBases.size()) + 
-		          "\n\n               Squads: " + std::to_string(Squads.size());
+		          "\nPotential Enemy Bases: " + std::to_string(PotentialEnemyBasePositions.size()) +
+		          "\n\n         Army Squads: " + std::to_string(Squads.size());
 	DrawTextOnScreen(b, 480, 20);
 
 	//Follow task
@@ -308,6 +324,7 @@ void MyBot::onUnitDestroy(BWAPI::Unit unit){
 			for (int j = 0; j < Squads.at(i)->members.size(); j++) {
 				if (Squads.at(i)->members.at(j) == unit) {
 					Squads.at(i)->members.erase(Squads.at(i)->members.begin() + j);
+					Broodwar->sendText("RIP unit");
 					goto end;
 				}
 			}
@@ -472,12 +489,13 @@ void MyBot::onUnitComplete(BWAPI::Unit unit){
 			if (unit->getType().getID() < 100) {
 				if (recruitmentSquad != nullptr) {
 					recruitmentSquad->members.push_back(unit);
-					Broodwar->sendText("A unit was added to the recruitment squad, new size: %d", recruitmentSquad->members.size());
-
+					//Broodwar->sendText("A unit was added to the recruitment squad, new size: %d", recruitmentSquad->members.size());
 				}
 				else {
 					Squad* temp = new Squad();
 					temp->members.push_back(unit);
+					temp->command = BWAPI::Orders::None;
+					temp->position = { 0, 0 };
 					Squads.push_back(temp);
 					recruitmentSquad = Squads.at(Squads.size() - 1);	//kanske fel
 					Broodwar->sendText("New recruitment squad created");
