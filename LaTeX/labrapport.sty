@@ -1,0 +1,83 @@
+%
+%%
+%% labrapport.sty
+%% Paket för laborationsrapporter.
+%% Byt filnamn vid modifikation av någon annan än undertecknad.
+%% Robert Nyqvist, 2016
+%%
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{labrapport}[2016/3/20]
+\RequirePackage{pxfonts,microtype}
+\RequirePackage{xcolor,ifpdf}
+\def\@subtitle{}
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\def\@course{}
+\def\course#1{\gdef\@course{#1}}
+\if@titlepage
+  \renewcommand\maketitle{%
+    \begin{titlepage}%
+      \usefont{T1}{phv}{m}{n}%
+      \pagecolor{red!10!blue!90!green!80}%
+      \color{white}%
+      \large
+      \noindent
+      \@course\hspace{\fill}\@date
+      \vspace{\stretch{1}}
+      \begin{center}
+        \nointerlineskip
+        \hrule height1pt width\the\linewidth depth0pt
+        \kern0.5cm
+        \huge\textbf{\@title}
+        \par\kern0.5cm
+        \hrule height1pt width\the\linewidth depth0pt
+        \kern1cm
+        \Large\@subtitle
+      \end{center}
+      \vspace{\stretch{2}}
+      \begin{flushright}
+        \renewcommand{\and}{\\}%
+        \@author
+      \end{flushright}
+    \end{titlepage}%
+    \ifpdf
+      \nopagecolor
+    \else
+      \pagecolor{white}%
+    \fi
+  }
+\fi
+\RequirePackage{graphics,listings}
+\lstdefinestyle{labstil}{%
+  basicstyle=\color{black}\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\slshape,
+  stringstyle=\color{red},
+  xleftmargin=1em,
+  xrightmargin=1em,
+  backgroundcolor=\color{green!40},
+  columns=fullflexible,
+  gobble=2,
+  tabsize=2,
+  showstringspaces=false,
+  keepspaces=true
+}
+\lstset{style=labstil}
+\lstnewenvironment{octave}[1][]{\lstset{language=Octave,style=labstil,#1}}{}
+\lstnewenvironment{octavefil}[1][]{\lstset{language=Octave,style=labstil,frame=single,#1}}{}
+\lstnewenvironment{matlab}[1][]{\lstset{language=Matlab,style=labstil,#1}}{}
+\lstnewenvironment{matlabfil}[1][]{\lstset{language=Matlab,style=labstil,frame=single,#1}}{}
+\setcounter{secnumdepth}{0}
+\RequirePackage{calc}
+\newsavebox{\svarbox}
+\newenvironment{svar}{%
+  \begin{lrbox}{\svarbox}
+    \begin{minipage}{\linewidth-2\fboxsep-2\fboxrule}
+      \textbf{Svar:}\space
+      }{%
+    \end{minipage}%
+  \end{lrbox}%
+  \medskip\par\noindent
+  \fcolorbox{black}{yellow}{\usebox{\svarbox}}%
+}
+\endinput

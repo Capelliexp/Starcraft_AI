@@ -1,0 +1,59 @@
+%
+%%
+%% lr-cover.sty
+%% Paket för försättssidan till laborationsrapporter.
+%% Byt filnamn vid modifikation av någon annan än undertecknad.
+%% Robert Nyqvist, 2014
+%% För information om hur man använder paketet, se slutet av filen.
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lr-cover}[2014/9/25]
+\RequirePackage{xcolor,ifpdf}
+\def\@subtitle{}
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\def\@course{}
+\def\course#1{\gdef\@course{#1}}
+\if@titlepage
+  \renewcommand\maketitle{%
+    \begin{titlepage}%
+      \usefont{T1}{phv}{m}{n}%
+      \pagecolor{red!10!blue!90!green!80}%
+      \color{white}%
+      \large
+      \noindent
+      \@course\hspace{\fill}\@date
+      \vspace{\stretch{1}}
+      \begin{center}
+        \nointerlineskip
+        \hrule height1pt width\the\linewidth depth0pt
+        \kern0.5cm
+        \huge\textbf{\@title}
+        \par\kern0.5cm
+        \hrule height1pt width\the\linewidth depth0pt
+        \kern1cm
+        \large\@subtitle
+      \end{center}
+      \vspace{\stretch{2}}
+      \begin{flushright}
+        \@author
+      \end{flushright}
+    \end{titlepage}%
+    \ifpdf
+      \nopagecolor
+    \else
+      \pagecolor{white}%
+    \fi
+  }
+\fi
+\endinput
+
+Användning:
+
+\usepackage{lr-cover}
+
+\title{...}
+\subtitle{...}
+\course{...}
+\author{...}
+\date{...}    % valfri
+\maketitle
