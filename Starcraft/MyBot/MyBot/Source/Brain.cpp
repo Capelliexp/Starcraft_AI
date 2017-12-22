@@ -341,7 +341,7 @@
 
 	CheckAllSquadOrders(bot);
 
-	if (bot->currentSubTaskNr > 5) {	//obs
+	if (bot->currentSubTaskNr > 9) {	//obs
 		AllSquadsExecute(bot);
 	}
 

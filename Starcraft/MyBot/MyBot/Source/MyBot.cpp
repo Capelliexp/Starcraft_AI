@@ -41,8 +41,8 @@ void MyBot::onStart(){
 	recruitmentSquad = nullptr;
 
 	Broodwar->enableFlag(Flag::UserInput);
-	Broodwar->setLocalSpeed(5);	//THE NEED FOR SPEED
-	Broodwar->setFrameSkip(4);	//SUPER DUPER SPEED
+	Broodwar->setLocalSpeed(15);	//THE NEED FOR SPEED
+	//sBroodwar->setFrameSkip(4);	//SUPER DUPER SPEED
 	//Broodwar->enableFlag(Flag::CompleteMapInformation);	//complete map information
 	Broodwar->sendText("power overwhelming");
 
